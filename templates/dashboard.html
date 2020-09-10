@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h3>Kontrol Paneli<h3>
+<hr>
+<p>
+    Hosgeldiniz, <small><a href="{% url 'user:profil' request.user.id %}">{{request.user.username}}</a></small>
+</p>
+<hr>
+<a class="btn btn-danger" href="/ekmek/ekmekEkle">Ekmek Turu Ekle</a>
+<a class="btn btn-danger" href="{% url 'user:profilEdit' request.user.id %}">Profili Guncelle</a>
+<hr>
+
+
+{% if ekmekler %}
+<div class="row">
+    <div class="col">
+<table class="table table-striped table-hover table-responsive-sm" style="background-color: #f0d7a7">
+        <thead class="table-dark" style="background-color: #c37960">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Ekmek Adi</th>
+            <th scope="col">Uretici</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ekmek in ekmekler %}
+            <tr>
+            <th scope="row">{{ekmek.id}}</th>
+            <td><a href="/ekmek/detay/{{ekmek.id}}">{{ekmek.ekmekAdi}}</a></td>
+            <td>{{ekmek.uretici.username}}</td>
+            <td><a class="btn btn-warning" href="/ekmek/update/{{ekmek.id}}">Güncelle</a></td>
+            <td><a class="btn btn-danger" href="/ekmek/delete/{{ekmek.id}}">Sil</a></td>
+          </tr>          
+            {% endfor %}
+          <!----->
+          
+        </tbody>
+      </table>
+      </div>
+      </div>
+
+{% else %}
+<div class="alert alert-danger">Henüz eklenmis bir ekmek turunuz yok.(</div>
+{% endif %}
+
+
+{% endblock body %}
+
+

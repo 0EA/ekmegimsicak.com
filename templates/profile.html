@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-2">
+        {% if profil.profilResmi %}
+        <img class="btn-md" src="{{profil.profilResmi.url}}" alt="" style="border-radius:50%; margin-top: 10%; margin-bottom: 10%;" width="125" height="125">
+        {% endif %}
+    </div>
+    <div class="col-sm-4">
+        <h2 style="margin-top:16.5%"><strong>{{user}}</strong></h2> 
+    </div>
+</div>
+<hr>
+<p>Aciklama:{{profil.aciklama|safe}}</p>
+<p>Telefon Numarasi: {{profil.telefonNumarasi}}</p>
+
+{% if ekmekler %}
+<div class="row">
+    <div class="col">
+<table class="table table-striped table-hover table-responsive-sm" style="background-color: {{profil.secColor}}">
+        <thead class="table-dark" style="background-color: {{profil.primeColor}}">
+          <tr>
+            <th scope="col">Ekmek Adi</th>
+            <th scope="col">Stok</th>
+            <th scope="col">Durum</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ekmek in ekmekler %}
+            <tr>
+            <td><a href="/ekmek/detay/{{ekmek.id}}">{{ekmek.ekmekAdi}}</a></td>
+            <td>{{ekmek.stok}}</td>
+            <td>{{ekmek.durum}}</td>
+          </tr>          
+            {% endfor %}
+          <!----->
+          
+        </tbody>
+      </table>
+      </div>
+      </div>
+
+{% else %}
+<div class="alert alert-danger">Henüz eklenmis bir ekmek turu yok.(</div>
+{% endif %}
+
+
+{% endblock body %}
+
+
+

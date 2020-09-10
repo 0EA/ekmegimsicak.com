@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="{% static 'agency/img/favicon.ico' %}" rel="icon">
+    <title>Ekmegim Sicak</title>
+</head>
+<body  style="background-color: #fcf7e6">
+    
+    {% include 'includes/navbar.html' %}
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'info' %}
+    <div class=" alert alert-danger">{{ message }}</div>
+    {% else %}
+    <div class=" alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+    <div style="margin-top: 20px;" class="container">
+    
+        {% block body %}
+
+        {% endblock body %}
+        <br><br><br>
+
+    </div>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+</body>
+</html>
