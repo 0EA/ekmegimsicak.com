@@ -36,7 +36,11 @@ def ekmekEkle(request):
         ekmek.uretici = request.user
         ekmek.save()
         messages.success(request, 'Ekmek Turu Basariyla Eklendi.')
-        return redirect('index')
+        ekmekler = Ekmek.objects.filter(uretici = request.user)
+        context = {
+        'ekmekler':ekmekler
+        }
+        return render(request, "ekmekKontrol.html", context=context)
     
     return render(request, 'ekmekEkle.html', {'form':form})
 
@@ -57,7 +61,12 @@ def update(request, id):
         ekmek.uretici = request.user
         ekmek.save()
         messages.success(request, 'Ekmek Turu Basariyla Guncellendi.')
-        return redirect('index')
+        ekmekler = Ekmek.objects.filter(uretici = request.user)
+        context = {
+        'ekmekler':ekmekler
+        }
+        return render(request, 'dashboard.html', context)
+
 
     return render(request, 'update.html', {'form':form})
 
@@ -81,13 +90,17 @@ def sicak(request, id):
     now = datetime.now()
     ekmekTuru = ekmek.ekmekAdi
     uretici = ekmek.uretici
-
     ekmek.sonSicak = now.strftime("%d/%m/%Y %H:%M:%S")
     ekmek.durum = 'Sicak'
     ekmek.stok = 'Var'
     ekmek.save()
     tasks.setEkmekSoguk(id)
-    return redirect('index')
+    ekmekler = Ekmek.objects.filter(uretici = request.user)
+    context = {
+        'ekmekler':ekmekler
+    }
+    messages.success(request, 'Ekmek Sicak Yayinlandi')
+    return render(request, "ekmekKontrol.html", context=context)
 
 
 @login_required
@@ -100,7 +113,11 @@ def vaziyet(request, id):
         ekmek.uretici = request.user
         ekmek.save()
         messages.success(request, 'Ekmek Durumu Basariyla Guncellendi.')
-        return redirect('index')
+        ekmekler = Ekmek.objects.filter(uretici = request.user)
+        context = {
+        'ekmekler':ekmekler
+        }
+        return render(request, "ekmekKontrol.html", context=context)
 
     return render(request, 'update.html', {'form':form})
 

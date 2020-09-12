@@ -1,5 +1,4 @@
 from django.db import models
-from firebase_orm import models as models2
 from ckeditor.fields import RichTextField
 
 # Create your models here.

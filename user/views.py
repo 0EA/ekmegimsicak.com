@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from django.utils.html import strip_tags
 from .models import Profile
 import json
+import time
+import datetime
 
 
 def loginUser(request):
@@ -47,28 +49,7 @@ def logoutUser(request):
     logout(request)
     messages.success(request, "Başarıyla çıkış yaptınız")
 
-    return redirect('index')
-
-
-def json1(request, id):
-    #uretici = User.objects.get(id=id)
-    ekmekler = Ekmek.objects.filter(uretici_id = id).values()
-    ekmek_list = list(ekmekler)
-    if len(ekmek_list)>0:
-        for i in ekmek_list:
-            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
-            #i['ekmekResmi'] = '/media/' + i['ekmekResmi']
-    return JsonResponse(ekmek_list, safe=False)
-
-
-def firmalarJson(request):
-    users = User.objects.all().values('id','first_name', 'last_name',)
-    users_list = list(users)
-    for subDict in users_list:
-        subDict['ProfilePicUrl'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
-    users_dict = {}
-    users_dict['firinlar'] = users_list
-    return JsonResponse(users_dict, safe=False)
+    return redirect('')
 
 
 def profil(request, id):
@@ -108,6 +89,43 @@ def index(request):
 
 def info(request):
     return render(request, "index-agency-firin.html")
+
+
+
+def json1(request, id):
+    #uretici = User.objects.get(id=id)
+    ekmekler = Ekmek.objects.filter(uretici_id = id).values()
+    ekmek_list = list(ekmekler)
+    if len(ekmek_list)>0:
+        for i in ekmek_list:
+            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
+            if i['sonSicak'] != None and str(i['sonSicak']) != 'null':
+                i['sonSicak'] = time.mktime(datetime.datetime.strptime(str(i['sonSicak']), "%d/%m/%Y %H:%M:%S").timetuple())
+            #i['ekmekResmi'] = '/media/' + i['ekmekResmi']
+    return JsonResponse(ekmek_list, safe=False)
+
+def firmalarJson(request):
+    users = User.objects.all().values('id','first_name', 'last_name')
+    users_list = list(users)
+    for subDict in users_list:
+        subDict['ProfilePicUrl'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
+        subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
+        subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
+        ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
+        ekmekler_list = list(ekmekler)
+        subDict['ekmekler'] = ekmekler_list
+
+        isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')
+        isimListesi = list(isimler)
+        temizlenmisListe = list()
+        for i in isimListesi:
+            temizlenmisListe.append(i['ekmekAdi'])
+
+        subDict['ekmekIsim'] = temizlenmisListe
+
+    users_dict = {}
+    users_dict['firinlar'] = users_list
+    return JsonResponse(users_dict, safe=False)
 
 
 
