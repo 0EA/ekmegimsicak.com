@@ -1,15 +1,9 @@
 firin sayfasi, musteri sayfasi
 
-json duzenlemesi
 firin konumu
-firin ekstra model adres
-
-
-
-tek json olcak
-firinlar olcak 
-firin attr olcak
-urunleri olacak
-urun attri
 
 butun attrsi olmayan filtre icin butun ekmekler
+
+sicak tarih timestamp
+
+ekmek detay strip tags

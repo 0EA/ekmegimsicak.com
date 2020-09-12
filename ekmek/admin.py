@@ -6,7 +6,7 @@ from .models import Ekmek
 @admin.register(Ekmek)
 class EkmekAdmin(admin.ModelAdmin):
 
-    list_display = ["ekmekAdi", "stok", "durum"]
+    list_display = ["ekmekAdi",]
 
     class Meta:
         model = Ekmek

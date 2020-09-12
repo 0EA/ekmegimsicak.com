@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import LoginForm, ProfileForm
 from django.contrib.auth.models import User
+from .forms import LoginForm, ProfileForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -92,27 +92,35 @@ def info(request):
 
 
 
-def json1(request, id):
+def filtreJson(request):
     #uretici = User.objects.get(id=id)
-    ekmekler = Ekmek.objects.filter(uretici_id = id).values()
+    ekmekler = Ekmek.objects.all().values('ekmekAdi')
     ekmek_list = list(ekmekler)
-    if len(ekmek_list)>0:
-        for i in ekmek_list:
-            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
-            if i['sonSicak'] != None and str(i['sonSicak']) != 'null':
-                i['sonSicak'] = time.mktime(datetime.datetime.strptime(str(i['sonSicak']), "%d/%m/%Y %H:%M:%S").timetuple())
-            #i['ekmekResmi'] = '/media/' + i['ekmekResmi']
-    return JsonResponse(ekmek_list, safe=False)
+    filtreSet = set()
+    for i in ekmek_list:
+        filtreSet.add(i['ekmekAdi'])
+    filtreList = list(filtreSet)
+    return JsonResponse(filtreList, safe=False)
 
 def firmalarJson(request):
-    users = User.objects.all().values('id','first_name', 'last_name')
+    users = User.objects.all().values('id','first_name', 'last_name',)
     users_list = list(users)
     for subDict in users_list:
         subDict['ProfilePicUrl'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
+        subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
+        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
+        subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
         ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
         ekmekler_list = list(ekmekler)
+
+        for i in ekmekler_list:
+            if i['sonSicak'] != None:
+                i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
+
+            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
+
         subDict['ekmekler'] = ekmekler_list
 
         isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')

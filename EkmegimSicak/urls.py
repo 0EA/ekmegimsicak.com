@@ -27,6 +27,8 @@ urlpatterns = [
     path('ekmek/', include('ekmek.urls')),
     path('ekmekKontrol/', ekmekViews.ekmekKontrol, name="ekmekKontrol"),
     path('info/', views.info, name='info'),
+    path('filtreJson/', views.filtreJson, name = 'filtreJson'),
+    path('firmalarJson/', views.firmalarJson, name='firmalarJson'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

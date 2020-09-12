@@ -11,5 +11,8 @@ class Profile(models.Model):
     telefonNumarasi = models.IntegerField(null=True, blank=True)
     primeColor = ColorField(default='#ffffff')
     secColor = ColorField(default='#000000')
+    adres = models.CharField(default='Kayitli Adres Bulunmuyor', max_length=150)
+    long = models.DecimalField(max_digits=9, decimal_places=6, default=00)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=00)
 
 
