@@ -1,3 +1,0 @@
-http://127.0.0.1:8000/user/firmalarJson/
-http://127.0.0.1:8000/user/json/2/
-python manage.py process_tasks
