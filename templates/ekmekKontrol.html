@@ -15,8 +15,6 @@
           <tr>
             <th scope="col">id</th>
             <th scope="col">Ekmek Adi</th>
-            <th scope="col">Stok</th>
-            <th scope="col">Durum</th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>
@@ -26,8 +24,6 @@
             <tr>
             <th scope="row">{{ekmek.id}}</th>
             <td><a href="/ekmek/detay/{{ekmek.id}}">{{ekmek.ekmekAdi}}</a></td>
-            <td>{{ekmek.stok}}</td>
-            <td>{{ekmek.durum}}</td>
             <td><a class="btn btn-warning" href="/ekmek/vaziyet/{{ekmek.id}}">Durum Güncelle</a></td>
             <td><a class="btn btn-danger" href="/ekmek/sicak/{{ekmek.id}}">Sicak Cikiyor</a></td>
           </tr>          

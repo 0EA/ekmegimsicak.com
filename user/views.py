@@ -49,7 +49,7 @@ def logoutUser(request):
     logout(request)
     messages.success(request, "Başarıyla çıkış yaptınız")
 
-    return redirect('')
+    return redirect('user:login')
 
 
 def profil(request, id):
@@ -114,13 +114,15 @@ def firmalarJson(request):
         subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
         ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
         ekmekler_list = list(ekmekler)
+        sicaklarListe = list()
 
         for i in ekmekler_list:
             if i['sonSicak'] != None:
                 i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
+                sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
 
             i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
-
+            
         subDict['ekmekler'] = ekmekler_list
 
         isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')
@@ -131,9 +133,29 @@ def firmalarJson(request):
 
         subDict['ekmekIsim'] = temizlenmisListe
 
+        def sortlist(A):
+            l = len(A)
+            for i in range(0, l):
+                for j in range(0, l-i-1):
+                    if (A[j][1] > A[j + 1][1]):
+                        tempo = A[j]
+                        A[j]= A[j + 1]
+                        A[j + 1]= tempo
+                        return A
+        
+        try:
+            subDict['firinSonSicak'] = sortlist(sicaklarListe)[-1]
+        except:
+            subDict['firinSonSicak'] = 0
+        
+
     users_dict = {}
     users_dict['firinlar'] = users_list
     return JsonResponse(users_dict, safe=False)
+
+
+def sicakFirinlarJson(request):
+    pass
 
 
 

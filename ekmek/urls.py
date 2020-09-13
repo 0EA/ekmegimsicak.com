@@ -13,5 +13,5 @@ urlpatterns = [
     path('sicak/<int:id>', views.sicak, name='sicak'),
     path("vaziyet/<int:id>", views.vaziyet, name="vaziyet"),
     path("ekmekKontrol/", ekmekKontrol, name="ekmekKontrol")
-
+    
 ]

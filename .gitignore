@@ -1,3 +1,9 @@
+zzYapilacaklar
+zzJsonLinks
+musteriText.txt
+metin.txt
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -57,7 +63,7 @@ local_settings.py
 # Flask stuff:
 instance/
 .webassets-cache
-
+db.sqlite3
 # Scrapy stuff:
 .scrapy
 
