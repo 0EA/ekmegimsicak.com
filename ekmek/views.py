@@ -44,7 +44,7 @@ def ekmekEkle(request):
         context = {
         'ekmekler':ekmekler
         }
-        return render(request, "ekmekKontrol.html", context=context)
+        return redirect('/ekmek/dashboard')
     
     return render(request, 'ekmekEkle.html', {'form':form})
 
@@ -69,7 +69,7 @@ def update(request, id):
         context = {
         'ekmekler':ekmekler
         }
-        return render(request, 'dashboard.html', context)
+        return redirect('/ekmek/dashboard')
 
 
     return render(request, 'update.html', {'form':form})
@@ -116,20 +116,19 @@ def sicak(request, id):
     now = datetime.now()
     ekmekTuru = ekmek.ekmekAdi
     uretici = ekmek.uretici
+    ekmekID = ekmek.id
     ekmekAdi = ekmek.ekmekAdi
     ekmek.sonSicak = now.strftime("%d/%m/%Y %H:%M:%S")
     ekmek.save()
     tasks.setEkmekSoguk(id)
-    ekmekler = Ekmek.objects.filter(uretici = request.user)
-    context = {
-        'ekmekler':ekmekler
-    }
     messages.success(request, 'Ekmek Sicak Yayinlandi')
     message_title = str(uretici)
     message_body = "Sicak " + ekmekAdi + " cikiyor!"
-    result = push_service.notify_topic_subscribers(topic_name="ekmek", message_title=message_title, message_body=message_body)
+    result = push_service.notify_topic_subscribers(topic_name=str(ekmekID), message_title=message_title, message_body=message_body)
+    result2 = push_service.notify_topic_subscribers(topic_name= str(uretici.id) + '-' + str(ekmekID), message_title=message_title, message_body=message_body)
+    
 
-    return render(request, "ekmekKontrol.html", context=context)
+    return redirect('/ekmekKontrol')
 
 
 @login_required
@@ -142,11 +141,7 @@ def vaziyet(request, id):
         ekmek.uretici = request.user
         ekmek.save()
         messages.success(request, 'Ekmek Durumu Basariyla Guncellendi.')
-        ekmekler = Ekmek.objects.filter(uretici = request.user)
-        context = {
-        'ekmekler':ekmekler
-        }
-        return render(request, "ekmekKontrol.html", context=context)
+        return redirect('/ekmekKontrol')
 
     return render(request, 'update.html', {'form':form})
 

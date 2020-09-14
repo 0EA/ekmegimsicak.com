@@ -106,6 +106,7 @@ def firmalarJson(request):
     users = User.objects.all().values('id','first_name', 'last_name',)
     users_list = list(users)
     for subDict in users_list:
+        subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
         subDict['ProfilePicUrl'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
@@ -117,9 +118,12 @@ def firmalarJson(request):
         sicaklarListe = list()
 
         for i in ekmekler_list:
-            if i['sonSicak'] != None:
-                i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
-                sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
+            try:
+                if i['sonSicak'] != None:
+                    i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
+                    sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
+            except:
+                i['sonSicak'] = 0
 
             i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
             
@@ -131,20 +135,15 @@ def firmalarJson(request):
         for i in isimListesi:
             temizlenmisListe.append(i['ekmekAdi'])
 
-        subDict['ekmekIsim'] = temizlenmisListe
 
-        def sortlist(A):
-            l = len(A)
-            for i in range(0, l):
-                for j in range(0, l-i-1):
-                    if (A[j][1] > A[j + 1][1]):
-                        tempo = A[j]
-                        A[j]= A[j + 1]
-                        A[j + 1]= tempo
-                        return A
+        subDict['ekmekIsim'] = temizlenmisListe
+        
+
         
         try:
-            subDict['firinSonSicak'] = sortlist(sicaklarListe)[-1]
+            def sortSecond(val): 
+                return val[1]
+            subDict['firinSonSicak'] = sorted(sicaklarListe, key = sortSecond, reverse = True)[0]
         except:
             subDict['firinSonSicak'] = 0
         

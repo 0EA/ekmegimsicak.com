@@ -20,7 +20,7 @@ class Ekmek(models.Model):
     ekmekAdi = models.CharField(max_length=50, verbose_name="Ekmek Cinsi")
     ekmekDetayi = RichTextField(default='')
     ekmekResmi = models.ImageField(blank=True, null=True, verbose_name='Ekmek Resmi Ekle', upload_to='ekmek/')
-    sonSicak = models.CharField(max_length=40,blank=True, null=True, verbose_name='Sicak Cikis Tarihi', default='1 Ocak 1970')
+    sonSicak = models.CharField(max_length=40,blank=True, null=True, verbose_name='Sicak Cikis Tarihi', default='11/09/2020 14:24:36')
 
     
 
