@@ -6,7 +6,7 @@ import ekmek
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from . import tasks
-
+from pusher_push_notifications import PushNotifications
 
 # Create your views here.
 @login_required(login_url=('user:login'))
@@ -79,8 +79,30 @@ def delete(request, id):
 
     return redirect('/ekmek/dashboard')
 
+def push_notify(uretici, ekmekAdi):
 
+    beams_client = PushNotifications(
+        instance_id='f2fa28f2-495b-4256-b8ef-c41fc34e9627',
+        secret_key='4A5DE646C46789472704A8B1D5581BCA104329BB0A438DBD67132305BF656B5F',
+    )
+    response = beams_client.publish_to_interests(
+    interests=['hello'],
+    publish_body={
+        'apns': {
+            'aps': {
+                'alert': 'Ekmek Çıkıyor!'
+            }
+        },
+        'fcm': {
+            'notification': {
+                'title': str(uretici),
+                'body': str('Sıcak ' + ekmekAdi + ' çıkıyor!')
+                        }
+                    }
+                }
+    )
 
+    print(response['publishId'])
 @login_required
 def sicak(request, id):
 
@@ -90,9 +112,8 @@ def sicak(request, id):
     now = datetime.now()
     ekmekTuru = ekmek.ekmekAdi
     uretici = ekmek.uretici
+    ekmekAdi = ekmek.ekmekAdi
     ekmek.sonSicak = now.strftime("%d/%m/%Y %H:%M:%S")
-    ekmek.durum = 'Sicak'
-    ekmek.stok = 'Var'
     ekmek.save()
     tasks.setEkmekSoguk(id)
     ekmekler = Ekmek.objects.filter(uretici = request.user)
@@ -100,6 +121,9 @@ def sicak(request, id):
         'ekmekler':ekmekler
     }
     messages.success(request, 'Ekmek Sicak Yayinlandi')
+
+    push_notify(uretici, ekmekAdi)
+
     return render(request, "ekmekKontrol.html", context=context)
 
 
