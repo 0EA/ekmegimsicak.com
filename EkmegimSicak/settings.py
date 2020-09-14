@@ -157,6 +157,3 @@ CKEDITOR_UPLOAD_PATH = "ck_uploads/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-FIREBASE_ORM_CERTIFICATE = '.\ekmegimsicak-firebase-adminsdk-gxxvn-a8b7242f4c.json'
-FIREBASE_ORM_BUCKET_NAME = 'ekmegimsicak.appspot.com'

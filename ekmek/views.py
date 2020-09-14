@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from . import tasks
 from pusher_push_notifications import PushNotifications
+from pyfcm import FCMNotification
+
+push_service = FCMNotification(api_key="AAAA4Mbmo0I:APA91bGKs-uJQhBI9mig3XJnpuLUnQL8yoyZij9WGpR3ACtI7uHrH8RQCYVrk4DvYDLPoDE3CGrA0F8MwMI-5egC4SiTxbj2S67DzSxVagAq0JUBRjWZg-HSqRUH-8Yws34hLOQcsM3W")
+
 
 # Create your views here.
 @login_required(login_url=('user:login'))
@@ -121,8 +125,9 @@ def sicak(request, id):
         'ekmekler':ekmekler
     }
     messages.success(request, 'Ekmek Sicak Yayinlandi')
-
-    push_notify(uretici, ekmekAdi)
+    message_title = str(uretici)
+    message_body = "Sicak " + ekmekAdi + " cikiyor!"
+    result = push_service.notify_topic_subscribers(topic_name="ekmek", message_title=message_title, message_body=message_body)
 
     return render(request, "ekmekKontrol.html", context=context)
 
