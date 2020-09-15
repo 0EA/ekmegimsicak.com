@@ -118,6 +118,7 @@ def firmalarJson(request):
         sicaklarListe = list()
 
         for i in ekmekler_list:
+            i['username'] = User.objects.filter(profile=Profile.objects.filter(user_id=i['uretici_id']).first()).first().username
             try:
                 if i['sonSicak'] != None:
                     i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())

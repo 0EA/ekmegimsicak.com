@@ -124,8 +124,8 @@ def sicak(request, id):
     messages.success(request, 'Ekmek Sicak Yayinlandi')
     message_title = str(uretici)
     message_body = "Sicak " + ekmekAdi + " cikiyor!"
-    result = push_service.notify_topic_subscribers(topic_name=str(ekmekID), message_title=message_title, message_body=message_body)
-    result2 = push_service.notify_topic_subscribers(topic_name= str(uretici.id) + '-' + str(ekmekID), message_title=message_title, message_body=message_body)
+    result = push_service.notify_topic_subscribers(topic_name=str(uretici), message_title=message_title, message_body=message_body)
+    result2 = push_service.notify_topic_subscribers(topic_name= str(uretici) + '-' + str(ekmekID), message_title=message_title, message_body=message_body)
     
 
     return redirect('/ekmekKontrol')
