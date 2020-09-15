@@ -156,7 +156,7 @@ blockquote > cite {font-weight: 400;font-size: 14px;display: block;}
 
 /* text-color */
 .main-color{color: #c37960;}
-.alt-color{color: #f0d7a7;}
+.alt-color{color: #894e3f;}
 
 .gradient-text1{
     background: #eee1ba;
@@ -349,6 +349,34 @@ header a.logo img {max-width: 150px;}
     -webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.35);
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.35);
 }
+
+.download-app {
+    background: #f0d7a7; }
+    .download-app h1, .download-app p {
+      color: rgb(0, 0, 0); }
+    .download-app .apple {
+      text-align: right; }
+      .download-app .apple img {
+        height: 63px; }
+    .download-app .android {
+      text-align: left; }
+      .download-app .android img {
+        height: 63px; }
+    @media (max-width: 767px) {
+      .download-app .apple {
+        text-align: center; }
+        .download-app .apple img {
+          height: 63px;
+          margin-bottom: 30px; }
+      .download-app .android {
+        text-align: center; }
+        .download-app .android img {
+          height: 63px; } }
+    .download-app .device-container {
+      width: 300px;
+      max-height: 350px;
+      overflow: hidden;
+      margin: 0 auto; }
 
 .header-appear .navbar-top-default.navbar-gradient {
     background: #c37960;
@@ -1205,51 +1233,51 @@ span.anchor-circle{
 
 
 .process-wrapp > .pro-step.blue{
-    background: #03a9f5;
+    background: #c37960;
 }
 
 .process-wrapp:hover .pro-step.blue{
     -webkit-animation: itg_pulse_blue 1s infinite;
     -o-animation: itg_pulse_blue 1s infinite;
     animation: itg_pulse_blue 1s infinite;
-    -webkit-box-shadow:0 0 0 0 rgb(0, 188, 212);
-    box-shadow:0 0 0 0 rgb(0, 188, 212);
+    -webkit-box-shadow:0 0 0 0 rgb(137,78,63);
+    box-shadow:0 0 0 0 rgb(137,78,63);
 }
 
 .process-wrapp > .pro-step.midnight{
-    background: #41526b;
+    background: #c37960;
 }
 
 .process-wrapp:hover .pro-step.midnight{
     -webkit-animation: itg_pulse_midnight 1s infinite;
     -o-animation: itg_pulse_midnight 1s infinite;
     animation: itg_pulse_midnight 1s infinite;
-    -webkit-box-shadow:0 0 0 0 rgb(65, 82, 107);
-    box-shadow:0 0 0 0 rgb(65, 82, 107);
+    -webkit-box-shadow:0 0 0 0 rgb(137,78,63);
+    box-shadow:0 0 0 0 rgb(137,78,63);
 }
 
 .process-wrapp > .pro-step.purple{
-    background: #9556f5;
+    background: #c37960;
 }
 
 .process-wrapp:hover .pro-step.purple{
     -webkit-animation: itg_pulse_purple 1s infinite;
     -o-animation: itg_pulse_purple 1s infinite;
     animation: itg_pulse_purple 1s infinite;
-    -webkit-box-shadow:0 0 0 0 rgb(149, 86, 245);
-    box-shadow:0 0 0 0 rgb(149, 86, 245);
+    -webkit-box-shadow:0 0 0 0 rgb(137,78,63);
+    box-shadow:0 0 0 0 rgb(137,78,63);
 }
 
 .process-wrapp > .pro-step.pink{
-    background: #f021b6;
+    background: #c37960;
 }
 
 .process-wrapp:hover .pro-step.pink{
     -webkit-animation: itg_pulse_pink 1s infinite;
     -o-animation: itg_pulse_pink 1s infinite;
     animation: itg_pulse_pink 1s infinite;
-    -webkit-box-shadow:0 0 0 0 rgb(240, 33, 182);
-    box-shadow:0 0 0 0 rgb(240, 33, 182);
+    -webkit-box-shadow:0 0 0 0 rgb(137,78,63);
+    box-shadow:0 0 0 0 rgb(137,78,63);
 }
 
 /* ===================================
@@ -1377,7 +1405,7 @@ span.anchor-circle{
     border-radius: 50px;
     font-size: 17px;
     margin-right: 1px;
-    color: #3b3b3b;
+    color: rgb(137,78,63);
     border: 1px solid transparent;
     -webkit-transition: background-color .2s ease-in-out;
     -moz-transition: background-color .2s ease-in-out;
