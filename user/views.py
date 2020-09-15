@@ -108,6 +108,7 @@ def firmalarJson(request):
     for subDict in users_list:
         subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
         subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
+        subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
         subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
         subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
@@ -160,6 +161,7 @@ def firinJson(request, id):
         subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
         subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
+        subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
         subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
         subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
