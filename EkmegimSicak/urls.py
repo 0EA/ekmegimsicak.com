@@ -29,7 +29,7 @@ urlpatterns = [
     path('info/', views.info, name='info'),
     path('filtreJson/', views.filtreJson, name = 'filtreJson'),
     path('firmalarJson/', views.firmalarJson, name='firmalarJson'),
-    path('sicakFirinlarJson/', views.sicakFirinlarJson, name='sicakFirinlarJson')
+    path('firinJson/<int:id>', views.firinJson, name='firinJson'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

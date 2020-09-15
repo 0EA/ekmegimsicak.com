@@ -19,7 +19,6 @@ class Ekmek(models.Model):
     uretici = models.ForeignKey("auth.User", on_delete = models.CASCADE, verbose_name = "Üretici")
     ekmekAdi = models.CharField(max_length=50, verbose_name="Ekmek Cinsi")
     ekmekDetayi = RichTextField(default='')
-    ekmekResmi = models.ImageField(blank=True, null=True, verbose_name='Ekmek Resmi Ekle', upload_to='ekmek/')
     sonSicak = models.CharField(max_length=40,blank=True, null=True, verbose_name='Sicak Cikis Tarihi', default='11/09/2020 14:24:36')
 
     

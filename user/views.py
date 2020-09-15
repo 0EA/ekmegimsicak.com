@@ -107,7 +107,6 @@ def firmalarJson(request):
     users_list = list(users)
     for subDict in users_list:
         subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
-        subDict['ProfilePicUrl'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
         subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
@@ -154,9 +153,52 @@ def firmalarJson(request):
     return JsonResponse(users_dict, safe=False)
 
 
-def sicakFirinlarJson(request):
-    pass
+def firinJson(request, id):
+    users = User.objects.filter(id=id).values('id','first_name', 'last_name',)
+    users_list = list(users)
+    for subDict in users_list:
+        subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
+        subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
+        subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
+        subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
+        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
+        subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
+        ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
+        ekmekler_list = list(ekmekler)
+        sicaklarListe = list()
 
+        for i in ekmekler_list:
+            i['username'] = User.objects.filter(profile=Profile.objects.filter(user_id=i['uretici_id']).first()).first().username
+            try:
+                if i['sonSicak'] != None:
+                    i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
+                    sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
+            except:
+                i['sonSicak'] = 0
+
+            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
+            
+        subDict['ekmekler'] = ekmekler_list
+
+        isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')
+        isimListesi = list(isimler)
+        temizlenmisListe = list()
+        for i in isimListesi:
+            temizlenmisListe.append(i['ekmekAdi'])
+
+
+        subDict['ekmekIsim'] = temizlenmisListe
+        
+
+        
+        try:
+            def sortSecond(val): 
+                return val[1]
+            subDict['firinSonSicak'] = sorted(sicaklarListe, key = sortSecond, reverse = True)[0]
+        except:
+            subDict['firinSonSicak'] = 0
+        
+    return JsonResponse(users_list[0], safe=False)
 
 
 
