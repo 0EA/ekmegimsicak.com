@@ -3,6 +3,17 @@ zzJsonLinks
 musteriText.txt
 metin.txt
 
+*.log
+
+*.pot
+
+*.pyc
+
+*/*/*/__pycache__/
+
+*/*/__pycache__/
+
+*/__pycache__/
 EkmegimSicak/__pycache__/settings.cpython-37.pyc
 ekmek/__pycache__/views.cpython-37.pyc
 # Byte-compiled / optimized / DLL files
