@@ -30,6 +30,7 @@ urlpatterns = [
     path('filtreJson/', views.filtreJson, name = 'filtreJson'),
     path('firmalarJson/', views.firmalarJson, name='firmalarJson'),
     path('firinJson/<int:id>', views.firinJson, name='firinJson'),
+    path('firinlar/', views.firinlar, name='firinlar')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

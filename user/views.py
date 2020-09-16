@@ -203,4 +203,11 @@ def firinJson(request, id):
     return JsonResponse(users_list[0], safe=False)
 
 
+def firinlar(request):
+    context={
+
+    }
+    return render(request, 'firinlar.html', context=context)
+
+
 
