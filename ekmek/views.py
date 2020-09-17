@@ -12,6 +12,7 @@ from pyfcm import FCMNotification
 push_service = FCMNotification(api_key="AAAA4Mbmo0I:APA91bGKs-uJQhBI9mig3XJnpuLUnQL8yoyZij9WGpR3ACtI7uHrH8RQCYVrk4DvYDLPoDE3CGrA0F8MwMI-5egC4SiTxbj2S67DzSxVagAq0JUBRjWZg-HSqRUH-8Yws34hLOQcsM3W")
 
 
+
 # Create your views here.
 @login_required(login_url=('user:login'))
 def ekmekKontrol(request):

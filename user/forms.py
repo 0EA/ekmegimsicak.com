@@ -32,4 +32,4 @@ class RegisterForm(forms.Form):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ["profilResmi", "aciklama", "telefonNumarasi", 'primeColor', 'secColor']
+        fields = ["profilResmi", "aciklama", "telefonNumarasi",]

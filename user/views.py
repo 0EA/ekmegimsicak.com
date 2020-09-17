@@ -13,6 +13,15 @@ import time
 import datetime
 
 
+config = {
+  "apiKey": "AAAA4Mbmo0I:APA91bGKs-uJQhBI9mig3XJnpuLUnQL8yoyZij9WGpR3ACtI7uHrH8RQCYVrk4DvYDLPoDE3CGrA0F8MwMI-5egC4SiTxbj2S67DzSxVagAq0JUBRjWZg-HSqRUH-8Yws34hLOQcsM3W",
+  "authDomain": "ekmegimsicak.firebaseapp.com",
+  "databaseURL": "https://ekmegimsicak.firebaseio.com/",
+  "storageBucket": "ekmegimsicak.appspot.com"
+}
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
+
 def loginUser(request):
 
     if request.user.is_authenticated:
@@ -41,7 +50,7 @@ def loginUser(request):
         messages.success(request, 'Basariyla giris yaptiniz.')
         login(request, user)
         return redirect('ekmekKontrol')
-
+    user = auth.sign_in_with_email_and_password('asya_firin@ekmegimsicak.com', 'asya5580')
     return render(request,'login.html',context)
     
 @login_required(login_url=('user:login'))
@@ -111,7 +120,7 @@ def firmalarJson(request):
         subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
         subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
-        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
+        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().longitude
         subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
         ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
         ekmekler_list = list(ekmekler)
@@ -163,7 +172,7 @@ def firinJson(request, id):
         subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
         subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
         subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
-        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().long
+        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().longitude
         subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
         ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
         ekmekler_list = list(ekmekler)
