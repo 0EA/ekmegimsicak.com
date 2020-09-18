@@ -27,9 +27,6 @@ urlpatterns = [
     path('ekmek/', include('ekmek.urls')),
     path('ekmekKontrol/', ekmekViews.ekmekKontrol, name="ekmekKontrol"),
     path('info/', views.info, name='info'),
-    path('filtreJson/', views.filtreJson, name = 'filtreJson'),
-    path('firmalarJson/', views.firmalarJson, name='firmalarJson'),
-    path('firinJson/<int:id>', views.firinJson, name='firinJson'),
     path('firinlar/', views.firinlar, name='firinlar')
 ]
 

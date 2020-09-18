@@ -4,23 +4,22 @@ from .forms import LoginForm, ProfileForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from ekmek.models import Ekmek
 from django.http import JsonResponse
 from django.utils.html import strip_tags
 from .models import Profile
 import json
 import time
 import datetime
-
+import pyrebase
 
 config = {
-  "apiKey": "AAAA4Mbmo0I:APA91bGKs-uJQhBI9mig3XJnpuLUnQL8yoyZij9WGpR3ACtI7uHrH8RQCYVrk4DvYDLPoDE3CGrA0F8MwMI-5egC4SiTxbj2S67DzSxVagAq0JUBRjWZg-HSqRUH-8Yws34hLOQcsM3W",
+  "apiKey": "AIzaSyC8sQuCoPr854RbIJlpFFrrIHUrlQecTtE",
   "authDomain": "ekmegimsicak.firebaseapp.com",
   "databaseURL": "https://ekmegimsicak.firebaseio.com/",
   "storageBucket": "ekmegimsicak.appspot.com"
 }
+
 firebase = pyrebase.initialize_app(config)
-auth = firebase.auth()
 
 def loginUser(request):
 
@@ -101,120 +100,15 @@ def info(request):
 
 
 
-def filtreJson(request):
-    #uretici = User.objects.get(id=id)
-    ekmekler = Ekmek.objects.all().values('ekmekAdi')
-    ekmek_list = list(ekmekler)
-    filtreSet = set()
-    for i in ekmek_list:
-        filtreSet.add(i['ekmekAdi'])
-    filtreList = list(filtreSet)
-    return JsonResponse(filtreList, safe=False)
-
-def firmalarJson(request):
-    users = User.objects.all().values('id','first_name', 'last_name',)
-    users_list = list(users)
-    for subDict in users_list:
-        subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
-        subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
-        subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
-        subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
-        subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
-        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().longitude
-        subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
-        ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
-        ekmekler_list = list(ekmekler)
-        sicaklarListe = list()
-
-        for i in ekmekler_list:
-            i['username'] = User.objects.filter(profile=Profile.objects.filter(user_id=i['uretici_id']).first()).first().username
-            try:
-                if i['sonSicak'] != None:
-                    i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
-                    sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
-            except:
-                i['sonSicak'] = 0
-
-            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
-            
-        subDict['ekmekler'] = ekmekler_list
-
-        isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')
-        isimListesi = list(isimler)
-        temizlenmisListe = list()
-        for i in isimListesi:
-            temizlenmisListe.append(i['ekmekAdi'])
-
-
-        subDict['ekmekIsim'] = temizlenmisListe
-        
-
-        
-        try:
-            def sortSecond(val): 
-                return val[1]
-            subDict['firinSonSicak'] = sorted(sicaklarListe, key = sortSecond, reverse = True)[0]
-        except:
-            subDict['firinSonSicak'] = 0
-        
-
-    users_dict = {}
-    users_dict['firinlar'] = users_list
-    return JsonResponse(users_dict, safe=False)
-
-
-def firinJson(request, id):
-    users = User.objects.filter(id=id).values('id','first_name', 'last_name',)
-    users_list = list(users)
-    for subDict in users_list:
-        subDict['userName'] = User.objects.filter(profile=Profile.objects.filter(user_id=subDict['id']).first()).first().username
-        subDict['aciklama'] = strip_tags(Profile.objects.filter(user_id=subDict['id']).first().aciklama)
-        subDict['telefonNumarasi'] = Profile.objects.filter(user_id=subDict['id']).first().telefonNumarasi
-        subDict['profilResmi'] = Profile.objects.filter(user_id=subDict['id']).first().profilResmi.url
-        subDict['adres'] = Profile.objects.filter(user_id=subDict['id']).first().adres
-        subDict['long'] = Profile.objects.filter(user_id=subDict['id']).first().longitude
-        subDict['lat'] = Profile.objects.filter(user_id=subDict['id']).first().lat
-        ekmekler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values()
-        ekmekler_list = list(ekmekler)
-        sicaklarListe = list()
-
-        for i in ekmekler_list:
-            i['username'] = User.objects.filter(profile=Profile.objects.filter(user_id=i['uretici_id']).first()).first().username
-            try:
-                if i['sonSicak'] != None:
-                    i['sonSicak'] = time.mktime(datetime.datetime.strptime(i['sonSicak'], "%d/%m/%Y %H:%M:%S").timetuple())
-                    sicaklarListe.append([i['ekmekAdi'], i['sonSicak']])
-            except:
-                i['sonSicak'] = 0
-
-            i['ekmekDetayi'] = strip_tags(i['ekmekDetayi'])
-            
-        subDict['ekmekler'] = ekmekler_list
-
-        isimler = Ekmek.objects.filter(uretici=get_object_or_404(User, id=subDict['id'])).values('ekmekAdi')
-        isimListesi = list(isimler)
-        temizlenmisListe = list()
-        for i in isimListesi:
-            temizlenmisListe.append(i['ekmekAdi'])
-
-
-        subDict['ekmekIsim'] = temizlenmisListe
-        
-
-        
-        try:
-            def sortSecond(val): 
-                return val[1]
-            subDict['firinSonSicak'] = sorted(sicaklarListe, key = sortSecond, reverse = True)[0]
-        except:
-            subDict['firinSonSicak'] = 0
-        
-    return JsonResponse(users_list[0], safe=False)
-
 
 def firinlar(request):
+    db = firebase.database()
+    result = db.child("users").get().val()
+    print(result)
+    adres = result[0]['adres']
+    firinAdi = result[0]['first_name'] + ' ' + result[0]['last_name']
+    print(adres, firinAdi)
     context={
-
     }
     return render(request, 'firinlar.html', context=context)
 

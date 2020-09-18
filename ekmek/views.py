@@ -1,13 +1,13 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .forms import EkmekForm, Vaziyet
 from django.contrib import messages
-from .models import Ekmek
 import ekmek
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from . import tasks
 from pusher_push_notifications import PushNotifications
 from pyfcm import FCMNotification
+import pyrebase
 
 push_service = FCMNotification(api_key="AAAA4Mbmo0I:APA91bGKs-uJQhBI9mig3XJnpuLUnQL8yoyZij9WGpR3ACtI7uHrH8RQCYVrk4DvYDLPoDE3CGrA0F8MwMI-5egC4SiTxbj2S67DzSxVagAq0JUBRjWZg-HSqRUH-8Yws34hLOQcsM3W")
 
