@@ -99,16 +99,48 @@ def info(request):
     return render(request, "index-agency-firin.html")
 
 
-
+def sicakDurum(firinSonSicak):
+    dakika = firinSonSicak[1]
+    dakika = abs(dakika)
+    degisken = 'dakika'
+    if len(str(dakika)) >= 3:
+        dakika = dakika//60
+        degisken = 'saat'
+    if firinSonSicak[1] > 0:
+        firinSonSicak.append("#BA0036")
+        return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
+    elif firinSonSicak[1] > -45:
+        firinSonSicak.append("#ff5803")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+    else:
+        firinSonSicak.append("#2861ac")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
 
 def firinlar(request):
+    keyword = request.GET.get("keyword")
     db = firebase.database()
     result = db.child("users").get().val()
-    print(result)
-    adres = result[0]['adres']
-    firinAdi = result[0]['first_name'] + ' ' + result[0]['last_name']
-    print(adres, firinAdi)
+    timestamp = time.time()
+    for firin in result:
+        firin['firinSonSicak'][1] = int((firin['firinSonSicak'][1] - timestamp) // 60)
+        firin['firinSonSicak'][1] = sicakDurum(firin['firinSonSicak'])
+    
+    if keyword:
+        for i in result:
+            firinIsim = str(i['name']).lower()
+            if str(keyword).lower() in firinIsim:
+                context={
+                    'firinlar':[i]
+                }
+                return render(request, "firinlar.html", context=context)
+            else:
+                context={
+                'firinlar':result,
+                }
+                messages.info(request, "Maalesef aradığınız isme sahip fırın şu anda bulunmuyor :(")
+                return render(request, "firinlar.html", context=context)
     context={
+        'firinlar':result,
     }
     return render(request, 'firinlar.html', context=context)
 

@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_cleanup',
     'background_task',
-    'colorfield', 
+    'colorfield',
+    'mathfilters',
 ]
 BACKGROUND_TASK_RUN_ASYNC = True
 

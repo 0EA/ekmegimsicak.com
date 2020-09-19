@@ -6,13 +6,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <!-- Author -->
-    <meta name="author" content="NEA Studios">
+    <meta name="author" content="ekmegimsicak.com">
     <!-- description -->
     <meta name="description" content="Ekmeğim Sıcak projesi fırın müşterilerinin sıkıntı çektiği sıcak ekmeğe ulaşma ve zamanında yetişememe durumlarını ortadan kaldırmayı planlayan bir projedir.">
     <!-- keywords -->
     <meta name="keywords" content="fırın, sıcak ekmek, ekmek, pide, ekmeğim sicak">
     <!-- Page Title -->
-    <title>Ekmeğim Sıcak</title>
+    <title>Ekmeğim Sıcak | Firinlar</title>
     <!-- Favicon -->
     <link href="{% static 'agency/img/favicon.ico' %}" rel="icon">
     <!-- Bundle -->
@@ -55,24 +55,9 @@
             <!--Nav Links-->
             <div class="collapse navbar-collapse" id="agency">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-link link scroll active" href="#home">Başlangıç</a>
-                    <a class="nav-link link scroll" href="#about-us">Hakkımızda</a>
-                    <!--<a class="nav-link link scroll" href="#portfolio">Calismalarimiz</a>-->
-                    <a class="nav-link link scroll" href="#counters">Başarılar</a>
-                    <a class="nav-link link scroll" href="#download">Hemen İndirin!</a>
+                    <a class="nav-link link" href="{% url 'index' %}">Ana Sayfa</a>
                     <span class="menu-line"><i aria-hidden="true" class="fa fa-angle-down"></i></span>
                 </div>
-                <a class="nav-link btn btn-medium btn-rounded btn-transparent-white btn-hvr-white ml-3"
-                   href="/firinlar">Fırınlar
-                    <div class="btn-hvr-setting">
-                        <ul class="btn-hvr-setting-inner">
-                            <li class="btn-hvr-effect"></li>
-                            <li class="btn-hvr-effect"></li>
-                            <li class="btn-hvr-effect"></li>
-                            <li class="btn-hvr-effect"></li>
-                        </ul>
-                    </div>
-                </a>
             </div>
 
             <!--Menu Button-->
@@ -111,26 +96,9 @@
             <div class="shape-left">
                 <nav class="navbar full-menu-navigation left">
                     <ul class="list-unstyled">
-                        <li><a class="link scroll" href="#home">
+                        <li><a class="link" href="{% url 'index' %}">
                             <span class="anchor-circle"></span>
-                            <span class="anchor-text">Başlangıç</span>
-                        </a></li>
-                        <li><a class="link scroll" href="#about-us">
-                            <span class="anchor-circle"></span>
-                            <span class="anchor-text">Hakkımızda</span>
-                        </a></li>
-                        
-                        <li><a class="link scroll" href="#counters">
-                            <span class="anchor-circle"></span>
-                            <span class="anchor-text">Başarılar</span>
-                        </a></li>
-                        <li><a class="link scroll" href="#download">
-                            <span class="anchor-circle"></span>
-                            <span class="anchor-text">Hemen İndirin!</span>
-                        </a></li>
-                        <li><a class="link scroll" href="/firinlar">
-                            <span class="anchor-circle"></span>
-                            <span class="anchor-text">Fırınlar</span>
+                            <span class="anchor-text">Ana Sayfa</span>
                         </a></li>
                     </ul>
                     <span class="full-menu-dot" style="transform: scale(0);"></span>
@@ -178,12 +146,13 @@
             <div class="col-md-12 text-center">
                 <!--Search Form-->
                 <aside class="widget widget_search"  style="margin-top: -55px;">
-                    <form method="get" id="searchform" action="javascript:void(0);" role="search">
+                    <form id="searchform" role="search">
+                        {% csrf_token %}
                         <label class="sr-only" for="s">Search</label>
                         <div class="input-group">
-                            <input class="field form-control" id="s" name="s" type="text" placeholder="Search …" value="">
+                            <input class="field form-control" id="s" name="keyword" type="text" placeholder="Fırın ismi girin..." value="">
                             <span class="input-group-append">
-                            <button class="submit btn-search" id="searchsubmit" name="submit" type="submit"><i class="fas fa-search"></i></button>
+                            <button class="submit btn-search" id="searchsubmit" type="submit"><i class="fas fa-search"></i></button>
                             </span>
                         </div>
                     </form>
@@ -191,16 +160,24 @@
             </div>
         </div>
         <!--Row-->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="alert alert-info">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <div class="row wow fadeInUp">
             <!--News Item-->
-            
+            {% load mathfilters %}
+            {% for firin in firinlar %}
             <div class="col-lg-4" style="margin-top: 60px;">
                 
                 <div class="news-item">
                     <div class="news-text-box">
-                        <a href="{% static 'agency/blog-list.html' %}"><h2 class="">Asya Fırın</h2></a>
-                        <h6 style="color: crimson;">Fırında sıcak ekmek var</h6>
-                        <p class="param">Kayıtlı Adres Bulunmuyor</p>
+                        <a href="{% static 'agency/blog-list.html' %}"><h2 class="">{{ firin.name }}</h2></a>
+                        <h6 style="color: {{firin.firinSonSicak.2}};">{{firin.firinSonSicak.1}}</h6>
+                        <p class="param">{{ firin.adres }}</p>
                         <a class="author d-flex align-items-center" href="javascript:void(0);">
                             <a class="btn btn-large btn-rounded btn-pink btn-hvr-blue mt-2" href="/firinlar">Detaylar
                                 <div class="btn-hvr-setting">
@@ -216,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            
+            {% endfor %}
             
         </div>
     </div>
