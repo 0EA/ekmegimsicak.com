@@ -27,7 +27,10 @@ urlpatterns = [
     path('ekmek/', include('ekmek.urls')),
     path('ekmekKontrol/', ekmekViews.ekmekKontrol, name="ekmekKontrol"),
     path('info/', views.info, name='info'),
-    path('firinlar/', views.firinlar, name='firinlar')
+    path('firinlar/', views.firinlar, name='firinlar'),
+    path('detay', views.detay, name='detay'),
 ]
+
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

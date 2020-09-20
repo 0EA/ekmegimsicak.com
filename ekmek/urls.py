@@ -4,6 +4,8 @@ from django.urls import path
 from . import views
 from ekmek.views import ekmekKontrol
 
+app_name = 'ekmek'
+
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path("ekmekEkle/", views.ekmekEkle, name="ekmekEkle"),

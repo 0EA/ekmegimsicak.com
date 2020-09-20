@@ -144,5 +144,8 @@ def firinlar(request):
     }
     return render(request, 'firinlar.html', context=context)
 
+def detay(request, id):
+    pass
+
 
 
