@@ -106,7 +106,7 @@ def sicakDurum(firinSonSicak):
     if len(str(dakika)) >= 3:
         dakika = dakika//60
         degisken = 'saat'
-    if firinSonSicak[1] > 0:
+    if firinSonSicak[1] > -10:
         firinSonSicak.append("#BA0036")
         return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
     elif firinSonSicak[1] > -45:
@@ -115,6 +115,9 @@ def sicakDurum(firinSonSicak):
     else:
         firinSonSicak.append("#2861ac")
         return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+
+
+
 
 def firinlar(request):
     keyword = request.GET.get("keyword")
@@ -144,8 +147,40 @@ def firinlar(request):
     }
     return render(request, 'firinlar.html', context=context)
 
-def detay(request, id):
-    pass
+
+
+def saat_renk(sonSicakObjesi):
+    dakika = sonSicakObjesi[0]
+    dakika = abs(dakika)
+    degisken = 'dakika'
+    if len(str(dakika)) >= 3:
+        dakika = dakika//60
+        degisken = 'saat'
+    if sonSicakObjesi[0] > -10:
+        sonSicakObjesi[1] = ("#BA0036")
+        return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + ' çıkıyor.')
+    elif sonSicakObjesi[0] > -45:
+        sonSicakObjesi[1] = ("#ff5803")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + ' çıktı.')
+    else:
+        sonSicakObjesi[1] = ("#2861ac")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + ' çıktı.')
+
+def detay(request, name):
+    db = firebase.database()
+    firin = db.child("profiles").child(name).get().val()
+    suan = time.time()
+
+    for ekmek in firin['ekmekler']:
+        ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
+        ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
+        print(ekmek)
+
+
+    context = {
+        'firin':firin
+    }
+    return render(request, 'detay.html', context=context)
 
 
 

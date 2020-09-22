@@ -28,7 +28,7 @@ urlpatterns = [
     path('ekmekKontrol/', ekmekViews.ekmekKontrol, name="ekmekKontrol"),
     path('info/', views.info, name='info'),
     path('firinlar/', views.firinlar, name='firinlar'),
-    path('detay', views.detay, name='detay'),
+    path('detay/<str:name>', views.detay, name='detay'),
 ]
 
 

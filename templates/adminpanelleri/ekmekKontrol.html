@@ -9,31 +9,30 @@
 
 {% if ekmekler %}
 <div class="row">
-    <div class="col">
-<table class="table table-striped table-hover table-responsive-sm" style="background-color: #eee1ba">
-        <thead class="table-dark" style="background-color: #c37960">
+  <div class="col">
+    <table class="table table-striped table-hover table-responsive-sm" style="background-color: #eee1ba">
+      <thead class="table-dark" style="background-color: #c37960">
           <tr>
             <th scope="col">id</th>
             <th scope="col">Ekmek Adi</th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>
-        </thead>
+      </thead>
         <tbody>
             {% for ekmek in ekmekler %}
-            <tr>
+          <tr>
             <th scope="row">{{ekmek.id}}</th>
             <td><a href="/ekmek/detay/{{ekmek.id}}">{{ekmek.ekmekAdi}}</a></td>
             <td><a class="btn btn-warning" href="/ekmek/vaziyet/{{ekmek.id}}">Durum Güncelle</a></td>
             <td><a class="btn btn-danger" href="/ekmek/sicak/{{ekmek.id}}">Sicak Cikiyor</a></td>
           </tr>          
             {% endfor %}
-          <!----->
           
         </tbody>
-      </table>
-      </div>
-      </div>
+    </table>
+  </div>
+</div>
 
 {% else %}
 <div class="alert alert-danger">Henüz eklenmis bir ekmek turunuz yok.</div>

@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h3 class="mt-4">{{ekmek.ekmekAdi|safe}}</h3>
+
+        <!-- Author -->
+        <p class="lead">
+          <a href="">{{ekmek.uretici.username}}</a>
+        </p>
+
+        <hr>
+
+
+        {% if ekmek.ekmekResmi %}
+        <img class="img-fluid rounded" src="{{ekmek.ekmekResmi.url}}" alt="">    
+        <hr>
+
+        {% endif %}
+
+
+        <!-- Post Content -->
+        <p class="lead">
+        {{ekmek.ekmekDetayi|safe}}
+        </p>
+
+
+
+{% endblock body %}
+
+

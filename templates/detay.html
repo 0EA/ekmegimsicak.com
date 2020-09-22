@@ -1,37 +1,314 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="tr-tr">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <!-- Author -->
+    <meta name="author" content="ekmegimsicak.com">
+    <!-- description -->
+    <meta name="description" content="Ekmeğim Sıcak projesi fırın müşterilerinin sıkıntı çektiği sıcak ekmeğe ulaşma ve zamanında yetişememe durumlarını ortadan kaldırmayı planlayan bir projedir.">
+    <!-- keywords -->
+    <meta name="keywords" content="fırın, sıcak ekmek, ekmek, pide, ekmeğim sicak">
+    <!-- Page Title -->
+    <title>Ekmeğim Sıcak</title>
+    <!-- Favicon -->
+    <link href="{% static 'agency/img/favicon.ico' %}" rel="icon">
+    <!-- Bundle -->
+    <link href="{% static 'vendor/css/bundle.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/css/revolution-settings.min.css' %}" rel="stylesheet">
+    <!-- Plugin Css -->
+    <link href="{% static 'vendor/css/jquery.fancybox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/css/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/css/swiper.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/css/cubeportfolio.min.css' %}" rel="stylesheet">
+    <!-- Style Sheet -->
+    <link href="{% static 'agency/css/style.css' %}" rel="stylesheet">
+</head>
 
-{% block body %}
+<body data-offset="90" data-spy="scroll" data-target=".navbar">
 
-<div class="row">
+<!-- Preloader -->
+<div class="preloader">
+    <div class="box"></div>
+</div>
 
-      <!-- Post Content Column -->
-      <div class="col-lg-8">
+<!-- Ink Transition -->
+<div class="cd-transition-layer visible opening">
+    <div class="bg-layer"></div>
+</div>
+<!--/Preloader -->
 
-        <!-- Title -->
-        <h3 class="mt-4">{{ekmek.ekmekAdi|safe}}</h3>
+<!--Header Start-->
+<header class="cursor-light">
 
-        <!-- Author -->
-        <p class="lead">
-          <a href="">{{ekmek.uretici.username}}</a>
-        </p>
-
-        <hr>
-
-
-        {% if ekmek.ekmekResmi %}
-        <img class="img-fluid rounded" src="{{ekmek.ekmekResmi.url}}" alt="">    
-        <hr>
-
-        {% endif %}
-
-
-        <!-- Post Content -->
-        <p class="lead">
-        {{ekmek.ekmekDetayi|safe}}
-        </p>
+    <!--Navigation-->
+    <nav class="navbar navbar-top-default navbar-expand-lg navbar-gradient nav-icon alt-font">
+        <div class="container">
+            <a class="logo link" href="{% url 'index' %}" title="Ekmeğim Sıcak">
+                <!--Logo Default-->
+                <img alt="logo" class="logo-dark default" src="{% static 'agency/img/finalLogo.png' %}">
+            </a>
 
 
+            <!--Nav Links-->
+            <div class="collapse navbar-collapse" id="agency">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link link" href="{% url 'index' %}">Ana Sayfa</a>
+                    <span class="menu-line"><i aria-hidden="true" class="fa fa-angle-down"></i></span>
+                </div>
+            </div>
 
-{% endblock body %}
+            <!--Menu Button-->
+            <button class="fullnav-toggler link" id="full-menu-1" type="button">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+
+            <!--Slider Social-->
+            <div class="slider-social">
+                <ul class="list-unstyled">
+                    <li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
+                            aria-hidden="true" class="fab fa-facebook-f"></i></a></li>
+                    <li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
+                            aria-hidden="true" class="fab fa-instagram"></i></a></li>
+                    <li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
+                            aria-hidden="true" class="fab fa-twitter"></i></a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <!--Full menu-->
+    <div class="nav-holder main style-2 alt-font">
+
+        <!--Menu Button-->
+        <button class="fullnav-close link" type="button">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </button>
+
+        <div class="container">
+            <div class="shape-left">
+                <nav class="navbar full-menu-navigation left">
+                    <ul class="list-unstyled">
+                        <li><a class="link" href="{% url 'index' %}">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Ana Sayfa</span>
+                        </a></li>
+                    </ul>
+                    <span class="full-menu-dot" style="transform: scale(0);"></span>
+                </nav>
+                <img alt="shape" src="{% static 'agency/img/shape-8.png' %}">
+            </div>
+            <div class="shape-right">
+                <div class="full-menu-detail hide-cursor">
+                    <h6 class="title">Geliştirici İletişim</h6>
+                    <p><i class="fas fa-user-alt"></i>Eren Acar</p>
+                    <!--<p><i class="fas fa-mobile-alt"></i>+97 53 49 24 78 36</p>-->
+                    <p><i class="fas fa-envelope"></i>erenacar@ekmegimsicak.com</p>
+                </div>
+                <img alt="shape" src="{% static 'agency/img/shape-7.png' %}">
+            </div>
+        </div>
+    </div>
+
+</header>
+<!--Header End-->
+
+<!--Banner Start-->
+<section class="page-title cursor-light">
+    <!-- Pattern Layers -->
+    <div class="pattern-layers">
+        <div class="layer-one"></div>
+        <div class="layer-two"></div>
+    </div>
+    <div class="auto-container" style="margin-top: -75px;">
+        <div class="post-thumbnail">
+    <img alt="image" src="{% static 'agency/img/favicon.ico' %}" class="avatar">
+    </div>
+        <h2 class="hide-cursor"  style="margin-top: -40px;">{{firin.name}}</h2>
+        
+        <ul class="page-breadcrumb link">
+            <li><a href="{% url 'firinlar' %}"><span class="icon fas fa-home"></span>Fırınlar</a></li>
+            <li>{{firin.name}}</li>
+        </ul>
+    </div>
+</section>
+<!--Banner End-->
 
 
+<!--
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col">
+          <table class="table table-striped table-hover table-responsive-sm" style="background-color: #f0d7a7">
+            <thead class="table-dark" style="background-color: #c37960">
+                <tr>
+                    <th scope="col">Ekmek Adi</th>
+                    <th align="right" scope="col">Son Sicak Tarih</th>
+                  </tr>
+            </thead>
+              <tbody>
+                {% for ekmek in firin.ekmekler %}
+                <tr>
+                    <td style="color: saddlebrown"><b>{{ekmek.ekmekAdi}}</b></td>
+                    <td align="right" style="color: {{ekmek.sonSicak.1}}"><b>{{ekmek.sonSicak.0}}</b></td>
+                </tr>          
+                {% endfor %}   
+              </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+-->
+
+
+<div class="container" style="margin-top: 25px;">
+<div class="row wow fadeInUp">
+    <!--News Item-->
+    {% for ekmek in firin.ekmekler %}
+    <div class="col-lg-12">
+        <div class="news-item">
+            <div class="news-text-box" style="margin-top: -22px; margin-bottom: -22px;">
+                <div class="row">
+                <div class="col">
+                    <p class="para"><b>{{ekmek.sonSicak.2}}</b></p>
+                </div>
+                <div class="col-auto">
+                    <span class="date main-color" align="right" style="color: {{ekmek.sonSicak.1}}">{{ekmek.sonSicak.0}}</span> 
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}   
+
+</div>
+</div>
+
+
+
+
+
+
+<!--Contact Start-->
+<section class="contact-us" id="contact" style="margin-bottom: -50px;">
+
+    <div class="container">
+
+        <div class="row align-items-top">
+
+            <div class="col-lg-5 order-lg-2 wow">
+                <div class="contact-detail">
+                    <div class="contact-dots" data-dots=""></div>
+                    <!--Heading-->
+                    <div class="heading-area pb-5">
+                        <h2 class="title mt-0 pb-1">İletişim</h2>
+                        <p class="para">Nurullah Eren Acar</p>
+                    </div>
+
+                    <!--Address-->
+                    <ul class="address list-unstyled">
+                        <li>
+                            <span class="address-icon gradient-text2"><i aria-hidden="true"
+                                                                         class="fas fa-map-marker-alt"></i></span>
+                            <span class="address-text">Soğanlık, İstanbul</span>
+                        </li>
+                        <li>
+                            <span class="address-icon gradient-text2"><i aria-hidden="true"
+                                                                         class="fas fa-paper-plane"></i></span>
+                            <span class="address-text"><a class="mr-3 alt-color" href="javascript:void(0)">erenacar@ekmegimsicak.com</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<br><br>
+<!--Contact End-->
+
+<!--Footer Start-->
+<footer class="footer-style-1 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <!--Social-->
+            <div class="col-md-6">
+                <div class="footer-social">
+                    <ul class="list-unstyled">
+                        <li><a class="wow fadeInUp" href="https://www.facebook.com/ekmegimsicak.ekmegimsicak.1?ref=bookmarks"><i aria-hidden="true"
+                                                                                  class="fab fa-facebook-f"></i></a></li>
+                        <li><a class="wow fadeInDown" href="https://twitter.com/ekmegimsicak"><i aria-hidden="true"
+                                                                                    class="fab fa-twitter"></i></a></li>
+
+                        <li><a class="wow fadeInDown" href="https://www.linkedin.com/in/ekmegimsicak-ekmegimsicak-60036a1b6/"><i aria-hidden="true"
+                                                                                    class="fab fa-linkedin-in"></i></a></li>
+                        <li><a class="wow fadeInUp" href="https://www.instagram.com/ekmegimsicak/"><i aria-hidden="true"
+                                                                                  class="fab fa-instagram"></i></a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <!--Text-->
+            <div class="col-md-6 text-md-right">
+                <p class="company-about fadeIn">© NEA Stuios tarafindan <a href="http://ekmegimsicak.com/" style="color: #894e3f;">ekmegimsicak.com</a> icin gelistirilmistir. Butun haklari saklidir.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--Footer End-->
+
+<!--Animated Cursor-->
+<div id="aimated-cursor">
+    <div id="cursor">
+        <div id="cursor-loader"></div>
+    </div>
+</div>
+<!--Animated Cursor End-->
+
+<!--Scroll Top Start-->
+<span class="scroll-top-arrow"><i class="fas fa-angle-up"></i></span>
+<!--Scroll Top End-->
+
+<!-- JavaScript -->
+<script src="{% static 'vendor/js/bundle.min.js' %}"></script>
+<!-- Plugin Js -->
+<script src="{% static 'vendor/js/jquery.appear.js' %}"></script>
+<script src="{% static 'vendor/js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'vendor/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'vendor/js/swiper.min.js' %}"></script>
+<script src="{% static 'vendor/js/morphext.min.js' %}"></script>
+<script src="{% static 'vendor/js/TweenMax.min.j' %}s"></script>
+<script src="{% static 'vendor/js/wow.min.js' %}"></script>
+<script src="{% static 'vendor/js/jquery.cubeportfolio.min.js' %}"></script>
+<!-- REVOLUTION JS FILES -->
+<script src="{% static 'vendor/js/jquery.themepunch.tools.min.js' %}"></script>
+<script src="{% static 'vendor/js/jquery.themepunch.revolution.min.js' %}"></script>
+<!-- SLIDER REVOLUTION EXTENSIONS -->
+<script src="{% static 'vendor/js/extensions/revolution.extension.actions.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.carousel.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.migration.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.parallax.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+<script src="{% static 'vendor/js/extensions/revolution.extension.video.min.js' %}"></script>
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRG4KqGVNvAPY4UcVDLcLNXMXk2ktNfY"></script>
+<script src="{% static 'agency/js/map.js' %}"></script>
+<!-- custom script -->
+<script src="{% static 'vendor/js/contact_us.js' %}"></script>
+<script src="{% static 'agency/js/script.js' %}"></script>
+
+</body>
+</html>
