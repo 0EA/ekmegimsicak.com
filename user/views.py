@@ -11,6 +11,8 @@ import json
 import time
 import datetime
 import pyrebase
+from operator import itemgetter
+
 
 config = {
   "apiKey": "AIzaSyC8sQuCoPr854RbIJlpFFrrIHUrlQecTtE",
@@ -170,11 +172,14 @@ def detay(request, name):
     db = firebase.database()
     firin = db.child("profiles").child(name).get().val()
     suan = time.time()
+    print(firin['ekmekler'])
+    firin['ekmekler'] = sorted(firin['ekmekler'], key=itemgetter('sonSicak'), reverse=True)
+
 
     for ekmek in firin['ekmekler']:
         ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
         ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
-        print(ekmek)
+
 
 
     context = {
