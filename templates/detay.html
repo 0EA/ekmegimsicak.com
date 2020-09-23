@@ -196,8 +196,9 @@
 
 
 
+
 <!--Contact Start-->
-<section class="contact-us" id="contact" style="margin-bottom: -50px;">
+<section class="contact-us" id="contact">
 
     <div class="container">
 
@@ -209,23 +210,36 @@
                     <!--Heading-->
                     <div class="heading-area pb-5">
                         <h2 class="title mt-0 pb-1">İletişim</h2>
-                        <p class="para">Nurullah Eren Acar</p>
+                        <p class="para" style="font-size: 20px; margin-top: -10px;"><b>{{firin.name}}</b></p>
                     </div>
 
                     <!--Address-->
-                    <ul class="address list-unstyled">
+                    <ul class="address list-unstyled" style='margin-top: -24px; margin-bottom: -10px;'>
                         <li>
                             <span class="address-icon gradient-text2"><i aria-hidden="true"
                                                                          class="fas fa-map-marker-alt"></i></span>
-                            <span class="address-text">Soğanlık, İstanbul</span>
+                            <span class="address-text">{{firin.acikAdres}}</span>
                         </li>
                         <li>
                             <span class="address-icon gradient-text2"><i aria-hidden="true"
-                                                                         class="fas fa-paper-plane"></i></span>
-                            <span class="address-text"><a class="mr-3 alt-color" href="javascript:void(0)">erenacar@ekmegimsicak.com</a></span>
+                                                                         class="fas fa-phone-volume"></i></span>
+                            <span class="address-text"><a class="mr-3 alt-color" href="javascript:void(0)">{{firin.telefon}}</a></span>
                         </li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="col-lg-7 mt-4 pt-3 mt-lg-0 pt-lg-0 wow fadeInLeft">
+                <!--Heading-->
+                <div class="heading-area pb-2">
+                    <h2 class="title mt-0">Konum</h2>
+                </div>
+                <!--Map Start-->
+<div class="p-0">
+        <!--Map Initialize--><iframe src="{{firin.iframe}}" width="1200" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        
+</div>
+<!--Map End-->
             </div>
 
         </div>
@@ -233,8 +247,8 @@
     </div>
 
 </section>
-<br><br>
 <!--Contact End-->
+
 
 <!--Footer Start-->
 <footer class="footer-style-1 bg-light">
