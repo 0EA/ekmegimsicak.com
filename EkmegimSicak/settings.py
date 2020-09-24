@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'w-w*6cs*#7bmdyxz_8jdmuo_*0r!@vvn!r0e9hl5(#14&-z**('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = False
 
 ALLOWED_HOSTS = ['0ea.pythonanywhere.com', 'localhost', '127.0.0.1']
 
@@ -131,7 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 STATICFILES_DIRS = [
 
@@ -158,3 +159,10 @@ CKEDITOR_UPLOAD_PATH = "ck_uploads/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
