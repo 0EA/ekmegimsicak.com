@@ -180,6 +180,7 @@ def detay(request, name):
         ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
         ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
 
+    print(firin)
 
 
     context = {

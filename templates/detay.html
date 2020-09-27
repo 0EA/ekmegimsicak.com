@@ -14,7 +14,7 @@
     <!-- Page Title -->
     <title>Ekmeğim Sıcak</title>
     <!-- Favicon -->
-    <link href="{% static 'agency/img/favicon.ico' %}" rel="icon">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
     <!-- Bundle -->
     <link href="{% static 'vendor/css/bundle.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/css/revolution-settings.min.css' %}" rel="stylesheet">
@@ -48,7 +48,7 @@
         <div class="container">
             <a class="logo link" href="{% url 'index' %}" title="Ekmeğim Sıcak">
                 <!--Logo Default-->
-                <img alt="logo" class="logo-dark default" src="{% static 'agency/img/finalLogo.png' %}">
+                <img alt="logo" class="logo-dark default" src="{% static 'img/navbarLogo.png' %}">
             </a>
 
 
@@ -129,9 +129,9 @@
     </div>
     <div class="auto-container" style="margin-top: -75px;">
         <div class="post-thumbnail">
-    <img alt="image" src="{% static 'agency/img/favicon.ico' %}" class="avatar">
+    <img alt="image" src="{{firin.profilResmi}}" width="300px" height="200px" class="avatar">
     </div>
-        <h2 class="hide-cursor"  style="margin-top: -40px;">{{firin.name}}</h2>
+        <h2 class="hide-cursor"  style="margin-top: -30px;">{{firin.name}}</h2>
         
         <ul class="page-breadcrumb link">
             <li><a href="{% url 'firinlar' %}"><span class="icon fas fa-home"></span>Fırınlar</a></li>
