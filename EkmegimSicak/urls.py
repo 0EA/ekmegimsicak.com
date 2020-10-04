@@ -23,12 +23,12 @@ from ekmek import views as ekmekViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
-    path('user/', include('user.urls')),
-    path('ekmek/', include('ekmek.urls')),
-    path('ekmekKontrol/', ekmekViews.ekmekKontrol, name="ekmekKontrol"),
     path('info/', views.info, name='info'),
+    path('user/', include('user.urls')),
     path('firinlar/', views.firinlar, name='firinlar'),
     path('detay/<str:name>', views.detay, name='detay'),
+    path('ekmekKontrol/', views.ekmekKontrol, name="ekmekKontrol"),
+    path('<str:firinAdi>/<int:ekmekId>/', views.sicakCikar, name="sicakCikar"),
 ]
 
 

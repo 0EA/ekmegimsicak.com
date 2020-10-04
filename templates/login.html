@@ -1,4 +1,4 @@
-{% extends './layout.html' %}
+{% extends './adminpanelleri/layout.html' %}
 
 {% block body %}
 {% load crispy_forms_tags %}
@@ -6,13 +6,13 @@
 <br>
 <div class="row">
         <div class="col-md-6 offset-md-3">
-        <h3>Giriş Yap <small>(bu sayfa yetkililer icindir)</small></h3>
+        <h3>Giriş Yap</h3>
         <hr>
         <form method="POST">
                 {% csrf_token %}
                 {{form|crispy}}
                 <br>
-                <button type="submit" class="btn btn-danger" >Giriş</button>
+                <button type="submit" class="btn btn-danger">Giriş</button>
                 
             </form>
 
