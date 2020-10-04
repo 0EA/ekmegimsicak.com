@@ -29,15 +29,15 @@
 
 <body data-offset="90" data-spy="scroll" data-target=".navbar">
 
-<!-- Preloader -->
+<!-- Preloader
 <div class="preloader">
     <div class="box"></div>
-</div>
+</div> -->
 
-<!-- Ink Transition -->
+<!-- Ink Transition 
 <div class="cd-transition-layer visible opening">
     <div class="bg-layer"></div>
-</div>
+</div>-->
 <!--/Preloader -->
 
 <!--Header Start-->
@@ -149,7 +149,7 @@
     <!--News Item-->
     {% for ekmek in firin.ekmekler %}
     <div class="col-lg-12">
-        <a href=""><div class="news-item">
+        <a href="{% url 'sicakCikar' firinAdi=ekmek.userName ekmekId=ekmek.id %}"><div class="news-item">
             <div class="news-text-box" style="margin-top: -16px; margin-bottom: -16px;">
                 <div class="row">
                     <div class="col">
