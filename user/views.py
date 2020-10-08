@@ -47,6 +47,8 @@ def girisGerekli(func):
 
 
 def loginUser(request):
+    if isLogged():
+        return redirect('ekmekKontrol')
     form = LoginForm(request.POST or None)
     context = {
         'form':form
@@ -62,6 +64,7 @@ def loginUser(request):
             messages.info(request, 'Kullanici adi veya sifre hatali, lutfen tekrar deneyin.')
             return render(request, 'login.html', context)     
     return render(request,'login.html',context)
+
 @girisGerekli
 def logoutUser(request):
     auth.current_user = None
@@ -77,9 +80,12 @@ def sicakDurum(firinSonSicak):
     if len(str(dakika)) >= 3:
         dakika = dakika//60
         degisken = 'saat'
-    if firinSonSicak[1] > -10:
+    if firinSonSicak[1] > 0:
         firinSonSicak.append("#BA0036")
         return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
+    elif firinSonSicak[1] > -10:
+        firinSonSicak.append("#BA0036")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
     elif firinSonSicak[1] > -45:
         firinSonSicak.append("#ff5803")
         return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
@@ -125,14 +131,17 @@ def saat_renk(sonSicakObjesi):
     if len(str(dakika)) >= 3:
         dakika = dakika//60
         degisken = 'saat'
-    if sonSicakObjesi[0] > -10:
-        sonSicakObjesi[1] = ("#BA0036")
+    if sonSicakObjesi[0] > 0:
+        sonSicakObjesi[1] = ("#cc4a46")
         return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + ' çıkıyor.')
+    elif sonSicakObjesi[0] > -10:
+        sonSicakObjesi[1] = ("#cc4a46")
+        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + ' çıktı.')
     elif sonSicakObjesi[0] > -45:
         sonSicakObjesi[1] = ("#ff5803")
         return (str(abs(dakika)) + ' ' + degisken + ' önce ' + ' çıktı.')
     else:
-        sonSicakObjesi[1] = ("#2861ac")
+        sonSicakObjesi[1] = ("#4986D4")
         return (str(abs(dakika)) + ' ' + degisken + ' önce ' + ' çıktı.')
 def detay(request, name):
     db = firebase.database()
@@ -238,5 +247,40 @@ def ekmekKontrol(request):
     return render(request, "ekmekKontrol.html", context=context)
 
 
+
 def sicakCikar(request, firinAdi, ekmekId):
-    pass
+    if auth.current_user != None:
+        if request.method == 'POST':
+            dakika = request.POST.get('dakika')
+            bildirim = request.POST.get('bildirim', 'off')
+            print(dakika)
+            print(bildirim)
+
+
+            if int(dakika) < 0:
+                #bir sikinti olustu
+                return redirect('ekmekKontrol')
+
+            now = datetime.now().timestamp()
+            yeniTarih = int(now)
+            print(yeniTarih)
+            
+            return redirect('ekmekKontrol')
+        else:
+            db = firebase.database()
+            user_username = userInfo_username()
+            suan = time.time()
+            ekmek = db.child("profiles").child(user_username).child("ekmekler").child(str(ekmekId)).get().val()
+            ekmek = dict(ekmek)
+            ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
+            ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
+            print(ekmek)
+            return render(request,'sicakCikar.html', context=ekmek)
+
+    
+    messages.success(request, "Lutfen Once Giris Yapiniz")
+    return redirect('user:login')
+    
+    
+           
+    

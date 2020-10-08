@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="{% static '/img/favicon.ico' %}" rel="icon">
+    <title>Ekmegim Sicak</title>
+</head>
+<body  style="background-color: #894E3F">
+    
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'info' %}
+    <div class=" alert alert-danger">{{ message }}</div>
+    {% else %}
+    <div class=" alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+<style>
+  .slidecontainer {
+    width: 100%;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #f0f0f0;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #F0D7A7;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+  </style>
+
+<div style="margin-top: 20px;" class="container">
+
+
+  <br>
+  <div class="row" style="margin-top: 15%">
+    <div class="col offset-md-3">
+      <a href="{% url 'ekmekKontrol' %}"><img style="width: 25px; height: 25px;" src="{% static 'img/go-back.png' %}" alt=""></a>
+    </div>
+
+    <br><br>
+    <div class="col-11 offset-md-3">
+          <h3 style="color: #F0D7A7; font-size: 35px; font-weight: 500;">{{ekmekAdi}}</h3>
+          <h5 style="font-weight: 500; color:{{sonSicak.1}};">{{sonSicak.0}}</h5>
+          <br>
+          <form method="POST">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col">
+                  <input type="range" class="custom-range slider" min="0" max="30" step="5" id="myRange" name="dakika">
+                      <p style="color: bisque;"><span id="demo"></span></p>
+                    </div>
+                    <div class="col" style="margin-top: 0px;">
+                      <button type="submit" class="btn btn-danger" style="background-color: bisque; color: #894E3F; font-weight: 700; border-color: #9C634F">Sicak cikiyor!</button>
+                    </div>
+                  </div>
+                  <div class="form-group form-check">
+                    <input name="bildirim" type="checkbox" class="form-check-input" id="exampleCheck1" >
+                    <label class="form-check-label" style="color: bisque;" for="exampleCheck1">Bildirim Gonder</label>
+                  </div>
+                  
+          </form>
+  
+    </div>
+  </div>
+
+
+  <script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value + ' dakika sonra';
+    
+    slider.oninput = function() {
+      output.innerHTML = slider.value == 0 ? 'Su anda' : this.value + ' dakika sonra'
+    }
+  </script>
+
+
+
+
+
+        
+<br><br><br>
+</div>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+</body>
+</html>
