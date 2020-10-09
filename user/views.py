@@ -256,9 +256,6 @@ def sicakCikar(request, firinAdi, ekmekId):
             print(dakika)
             print(bildirim)
 
-            
-
-
             if int(dakika) < 0:
                 messages.info(request, 'Maalesef Bir Sikinti Olustu')
                 return redirect('ekmekKontrol')
@@ -275,8 +272,8 @@ def sicakCikar(request, firinAdi, ekmekId):
 
 
             message_title = str(firinIsmi)
-            message_body = str(dakika) + "dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
-            if dakika == 0:
+            message_body = str(dakika) + " dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
+            if int(dakika) == 0:
                 message_body = "Sıcak " + str(ekmekIsmi) + " çıkıyor!"
 
             data_message = {
