@@ -145,6 +145,13 @@
 
 
 <div class="container" style="margin-top: -35px;">
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="alert alert-info">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 <div class="row wow fadeInUp">
     <!--News Item-->
     {% for ekmek in firin.ekmekler %}

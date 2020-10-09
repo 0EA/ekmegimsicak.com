@@ -170,7 +170,7 @@ def info(request):
 
 
 
-def push_notify(uretici, ekmekAdi):
+def push_notify(uretici, ekmekAdi, dakika=0):
 
     beams_client = PushNotifications(
         instance_id='f2fa28f2-495b-4256-b8ef-c41fc34e9627',
@@ -256,16 +256,42 @@ def sicakCikar(request, firinAdi, ekmekId):
             print(dakika)
             print(bildirim)
 
+            
+
 
             if int(dakika) < 0:
-                #bir sikinti olustu
+                messages.info(request, 'Maalesef Bir Sikinti Olustu')
                 return redirect('ekmekKontrol')
 
             now = datetime.now().timestamp()
-            yeniTarih = int(now)
+            yeniTarih = int(now) + (int(dakika)*60)
             print(yeniTarih)
             
+            db = firebase.database()
+            db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"sonSicak":yeniTarih})
+            db.child("profiles").child(firinAdi).child("firinSonSicak").update({"1":yeniTarih})
+            firinIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/name").get().val()
+            ekmekIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/ekmekAdi").get().val()
+
+
+            message_title = str(firinIsmi)
+            message_body = str(dakika) + "dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
+            if dakika == 0:
+                message_body = "Sıcak " + str(ekmekIsmi) + " çıkıyor!"
+
+            data_message = {
+            "DATA" : "DATA",
+            "sender": firinAdi,
+            "ekmekId" : ekmekId,
+            "timestamp" : now,
+            }
+            result = push_service.notify_topic_subscribers(topic_name= str(firinAdi) + '-' + str(ekmekId), message_title=message_title, message_body=message_body, data_message=data_message)
+            
+            
+            messages.success(request, 'Bildirim Basari Ile Yayinlandi')
             return redirect('ekmekKontrol')
+
+
         else:
             db = firebase.database()
             user_username = userInfo_username()
