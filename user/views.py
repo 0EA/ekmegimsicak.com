@@ -196,6 +196,10 @@ def push_notify(uretici, ekmekAdi, dakika=0):
     #print(response['publishId'])
 
 
+def newhandler404(request, exception):
+    return render(request, '404.html', status=404)
+def newhandler500(request):
+    return render(request, '500.html', status=500)
 
 def sicak(request, id):
 

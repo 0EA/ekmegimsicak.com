@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from user import views
 from ekmek import views as ekmekViews
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +31,9 @@ urlpatterns = [
     path('ekmekKontrol/', views.ekmekKontrol, name="ekmekKontrol"),
     path('<str:firinAdi>/<int:ekmekId>/', views.sicakCikar, name="sicakCikar"),
 ]
+
+handler404 = views.newhandler404
+handler500 = views.newhandler500
 
 
 
