@@ -147,7 +147,7 @@ def detay(request, name):
     db = firebase.database()
     firin = db.child("profiles").child(name).get().val()
     suan = time.time()
-    firin['ekmekler'] = sorted(firin['ekmekler'], key=itemgetter('sonSicak'), reverse=True)
+    firin['ekmekler'] = sorted(firin['ekmekler'].values(), key=itemgetter('sonSicak'), reverse=True)
 
 
     for ekmek in firin['ekmekler']:
@@ -201,30 +201,6 @@ def newhandler404(request, exception):
 def newhandler500(request):
     return render(request, '500.html', status=500)
 
-def sicak(request, id):
-
-    ekmek = get_object_or_404(Ekmek, id = id)
-
-    #bildirimde kullanilacak
-    now = datetime.now()
-    ekmekTuru = ekmek.ekmekAdi
-    uretici = ekmek.uretici
-    ekmekID = ekmek.id
-    ekmekAdi = ekmek.ekmekAdi
-    ekmek.sonSicak = now.strftime("%d/%m/%Y %H:%M:%S")
-    ekmek.save()
-    #tasks.setEkmekSoguk(id)
-    messages.success(request, 'Ekmek Sicak Yayinlandi')
-    message_title = str(uretici)
-    message_body = "Sicak " + ekmekAdi + " cikiyor!"
-    data_message = {
-    "DATA" : "DATA",
-    }
-    result = push_service.notify_topic_subscribers(topic_name=str(uretici), message_title=message_title, message_body=message_body, data_message=data_message)
-    result2 = push_service.notify_topic_subscribers(topic_name= str(uretici) + '-' + str(ekmekID), message_title=message_title, message_body=message_body, data_message=data_message)
-
-
-    return redirect('/ekmekKontrol')
 
 
 def userInfo_username():
@@ -239,7 +215,7 @@ def ekmekKontrol(request):
     db = firebase.database()
     firin = db.child("profiles").child(user_username).get().val()
     suan = time.time()
-    firin['ekmekler'] = sorted(firin['ekmekler'], key=itemgetter('sonSicak'), reverse=True)
+    firin['ekmekler'] = sorted(firin['ekmekler'].values(), key=itemgetter('sonSicak'), reverse=True)
 
 
     for ekmek in firin['ekmekler']:

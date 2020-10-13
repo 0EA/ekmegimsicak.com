@@ -29,7 +29,7 @@ urlpatterns = [
     path('firinlar/', views.firinlar, name='firinlar'),
     path('detay/<str:name>', views.detay, name='detay'),
     path('ekmekKontrol/', views.ekmekKontrol, name="ekmekKontrol"),
-    path('<str:firinAdi>/<int:ekmekId>/', views.sicakCikar, name="sicakCikar"),
+    path('<str:firinAdi>/<str:ekmekId>/', views.sicakCikar, name="sicakCikar"),
 ]
 
 handler404 = views.newhandler404
