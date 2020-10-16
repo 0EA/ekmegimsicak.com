@@ -76,14 +76,34 @@
           <form method="POST">
                   {% csrf_token %}
                   <div class="row">
+
+
+
                     <div class="col">
-                  <input type="range" class="custom-range slider" min="0" max="30" step="5" id="myRange" name="dakika">
+                      <input type="range" class="custom-range slider" min="0" max="30" step="5" id="myRange" name="dakika">
                       <p style="color: bisque;"><span id="demo"></span></p>
                     </div>
+
+
                     <div class="col" style="margin-top: 0px;">
                       <button type="submit" class="btn btn-danger" style="background-color: bisque; color: #894E3F; font-weight: 700; border-color: #9C634F">Sicak cikiyor!</button>
                     </div>
+
                   </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <input type="range" class="custom-range slider" min="0" max="360" step="5" id="myRange2" name="duration">
+                      <p style="color: bisque;"><span id="demo2"></span></p>
+                    </div>
+
+                    <div class="col-sm-4">
+                      
+                    </div>
+
+                  </div>
+                  
+
                   <div class="form-group form-check">
                     <input name="bildirim" type="checkbox" class="form-check-input" id="exampleCheck1" checked>
                     <label class="form-check-label" style="color: bisque;" for="exampleCheck1">Bildirim Gonder</label>
@@ -95,15 +115,30 @@
   </div>
 
 
-  <script>
+<script>
     var slider = document.getElementById("myRange");
     var output = document.getElementById("demo");
     output.innerHTML = slider.value + ' dakika sonra';
     
+    slider.value = 0
+    output.innerHTML = 'Su Anda'
     slider.oninput = function() {
       output.innerHTML = slider.value == 0 ? 'Su anda' : this.value + ' dakika sonra'
     }
-  </script>
+</script>
+
+
+<script>
+  var slider2 = document.getElementById("myRange2");
+  var output2 = document.getElementById("demo2");
+  output2.innerHTML = slider2.value + '  dakika boyunca cikacak.';
+  
+  slider2.value = 0
+  output2.innerHTML = 'Tek Sefer cikacak'
+  slider2.oninput = function() {
+    output2.innerHTML = slider2.value == 0 ? 'Tek Sefer cikacak' : this.value + '  dakika boyunca cikacak'
+  }
+</script>
 
 
 

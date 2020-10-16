@@ -170,30 +170,7 @@ def info(request):
 
 
 
-def push_notify(uretici, ekmekAdi, dakika=0):
 
-    beams_client = PushNotifications(
-        instance_id='f2fa28f2-495b-4256-b8ef-c41fc34e9627',
-        secret_key='4A5DE646C46789472704A8B1D5581BCA104329BB0A438DBD67132305BF656B5F',
-    )
-    response = beams_client.publish_to_interests(
-    interests=['hello'],
-    publish_body={
-        'apns': {
-            'aps': {
-                'alert': 'Ekmek Çıkıyor!'
-            }
-        },
-        'fcm': {
-            'notification': {
-                'title': str(uretici),
-                'body': str('Sıcak ' + ekmekAdi + ' çıkıyor!')
-                        }
-                    }
-                }
-    )
-
-    #print(response['publishId'])
 
 
 def newhandler404(request, exception):
@@ -232,9 +209,9 @@ def sicakCikar(request, firinAdi, ekmekId):
     if auth.current_user != None:
         if request.method == 'POST':
             dakika = request.POST.get('dakika')
+            duration = request.POST.get('duration')
             bildirim = request.POST.get('bildirim', 'off')
-            print(dakika)
-            print(bildirim)
+            print(duration)
 
             if int(dakika) < 0:
                 messages.info(request, 'Maalesef Bir Sikinti Olustu')
@@ -242,7 +219,9 @@ def sicakCikar(request, firinAdi, ekmekId):
 
             now = datetime.now().timestamp()
             yeniTarih = int(now) + (int(dakika)*60)
-            print(yeniTarih)
+
+
+
             
             db = firebase.database()
             db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"sonSicak":yeniTarih})
@@ -250,22 +229,28 @@ def sicakCikar(request, firinAdi, ekmekId):
             firinIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/name").get().val()
             ekmekIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/ekmekAdi").get().val()
 
+            if int(duration) != 0:
+                db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(now)+int(duration)*60})
 
             message_title = str(firinIsmi)
             message_body = str(dakika) + " dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
             if int(dakika) == 0:
                 message_body = "Sıcak " + str(ekmekIsmi) + " çıkıyor!"
+                dakika = 5 * 60
 
             data_message = {
-            "DATA" : "DATA",
             "sender": firinAdi,
             "ekmekId" : ekmekId,
-            "timestamp" : now,
+            "timestamp" : yeniTarih,
+            "title": message_title,
+            "message": message_body
             }
-            result = push_service.notify_topic_subscribers(topic_name= str(firinAdi) + '-' + str(ekmekId), message_title=message_title, message_body=message_body, data_message=data_message)
-            
-            
-            messages.success(request, 'Bildirim Basari Ile Yayinlandi')
+
+            if bildirim == 'on':
+                result = push_service.notify_topic_subscribers(topic_name= str(firinAdi) + '-' + str(ekmekId), data_message=data_message, content_available=True, time_to_live=int(dakika))
+                messages.success(request, 'Bildirim Basari Ile Yayinlandi')
+            else:
+                messages.success(request, 'Ekmek Basari Ile Sicak Olarak Yayinlandi')
             return redirect('ekmekKontrol')
 
 
@@ -277,7 +262,6 @@ def sicakCikar(request, firinAdi, ekmekId):
             ekmek = dict(ekmek)
             ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
             ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
-            print(ekmek)
             return render(request,'sicakCikar.html', context=ekmek)
 
     
