@@ -148,12 +148,9 @@ def detay(request, name):
     firin = db.child("profiles").child(name).get().val()
     suan = time.time()
     firin['ekmekler'] = sorted(firin['ekmekler'].values(), key=itemgetter('sonSicak'), reverse=True)
-
-
     for ekmek in firin['ekmekler']:
         ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
         ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
-
     context = {
         'firin':firin
     }
@@ -167,17 +164,6 @@ def index(request):
 
 def info(request):
     return render(request, "index-agency-firin.html")
-
-
-
-
-
-
-def newhandler404(request, exception):
-    return render(request, '404.html', status=404)
-def newhandler500(request):
-    return render(request, '500.html', status=500)
-
 
 
 def userInfo_username():
@@ -206,7 +192,7 @@ def ekmekKontrol(request):
 
 
 def sicakCikar(request, firinAdi, ekmekId):
-    if auth.current_user != None:
+    if isLogged():
         if request.method == 'POST':
             dakika = request.POST.get('dakika')
             duration = request.POST.get('duration')
@@ -220,9 +206,6 @@ def sicakCikar(request, firinAdi, ekmekId):
             now = datetime.now().timestamp()
             yeniTarih = int(now) + (int(dakika)*60)
 
-
-
-            
             db = firebase.database()
             db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"sonSicak":yeniTarih})
             db.child("profiles").child(firinAdi).child("firinSonSicak").update({"1":yeniTarih})
