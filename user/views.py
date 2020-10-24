@@ -13,7 +13,6 @@ import datetime
 from datetime import datetime, timedelta
 import pyrebase
 from operator import itemgetter
-from pusher_push_notifications import PushNotifications
 from pyfcm import FCMNotification
 
 config = {
@@ -80,6 +79,27 @@ def sicakDurum(firinSonSicak):
     if len(str(dakika)) >= 3:
         dakika = dakika//60
         degisken = 'saat'
+
+    timestamp = time.time()
+
+    firinSonSicak[2] = int((firinSonSicak[2] - timestamp) // 60)
+
+    if firinSonSicak[2] > firinSonSicak[1]:
+        duration = firinSonSicak[2]
+        degisken2 = 'dakika'
+        if len(str(duration)) >= 3:
+            duration = duration//60
+            degisken2 = 'saat'
+
+        firinSonSicak[2] = int(duration - firinSonSicak[1])
+
+    else:
+        firinSonSicak[2] = 0
+
+
+
+
+
     if firinSonSicak[1] > 0:
         firinSonSicak.append("#BA0036")
         return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
@@ -98,9 +118,12 @@ def firinlar(request):
     result = db.child("profiles").get().val()
     result = dict(result)
     timestamp = time.time()
-    for firinAdi,firin in result.items():
-        firin['firinSonSicak'][1] = int((firin['firinSonSicak'][1] - timestamp) // 60)
-        firin['firinSonSicak'][1] = sicakDurum(firin['firinSonSicak'])
+    try:
+        for firinAdi,firin in result.items():
+            firin['firinSonSicak'][1] = int((firin['firinSonSicak'][1] - timestamp) // 60)
+            firin['firinSonSicak'][1] = sicakDurum(firin['firinSonSicak'])
+    except:
+        pass
     
     if keyword:
         for firinAdi, i in result.items():
@@ -208,12 +231,13 @@ def sicakCikar(request, firinAdi, ekmekId):
 
             db = firebase.database()
             db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"sonSicak":yeniTarih})
-            db.child("profiles").child(firinAdi).child("firinSonSicak").update({"1":yeniTarih})
+            db.child("profiles").child(firinAdi).child("firinSonSicak").update({"1":int(yeniTarih)})
             firinIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/name").get().val()
             ekmekIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/ekmekAdi").get().val()
 
             if int(duration) != 0:
-                db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(now)+int(duration)*60})
+                db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(yeniTarih)+int(duration)*60})
+                db.child("profiles").child(firinAdi).child("firinSonSicak").update({"2":int(yeniTarih)+int(duration)*60})
 
             message_title = str(firinIsmi)
             message_body = str(dakika) + " dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
