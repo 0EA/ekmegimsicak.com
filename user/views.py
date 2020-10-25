@@ -81,37 +81,38 @@ def sicakDurum(firinSonSicak):
         degisken = 'saat'
 
     timestamp = time.time()
+    
+    firinSonSicakDonusturulmus = int((firinSonSicak[2] - timestamp) // 60)
 
-    firinSonSicak[2] = int((firinSonSicak[2] - timestamp) // 60)
-
-    if firinSonSicak[2] > firinSonSicak[1]:
-        duration = firinSonSicak[2]
+    if firinSonSicakDonusturulmus - firinSonSicak[1] > 0 and firinSonSicak[2] - timestamp > 0:
+        duration = firinSonSicakDonusturulmus - firinSonSicak[1]
         degisken2 = 'dakika'
         if len(str(duration)) >= 3:
             duration = duration//60
             degisken2 = 'saat'
-
-        firinSonSicak[2] = int(duration - firinSonSicak[1])
+        firinSonSicak[2] = str(duration) + " " + str(degisken2) + ' boyunca çıkacak'
+        
 
     else:
-        firinSonSicak[2] = 0
-
-
-
-
+        firinSonSicak[2] = ''
 
     if firinSonSicak[1] > 0:
         firinSonSicak.append("#BA0036")
-        return (str(abs(dakika)) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
+        return (str(dakika) + ' ' + degisken + ' sonra ' + firinSonSicak[0] + ' çıkıyor.')
     elif firinSonSicak[1] > -10:
         firinSonSicak.append("#BA0036")
-        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+        return (str(dakika) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
     elif firinSonSicak[1] > -45:
         firinSonSicak.append("#ff5803")
-        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+        return (str(dakika) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+    elif firinSonSicak[1] > -60*6:
+        firinSonSicak.append("#2861ac")
+        return (str(dakika) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
     else:
         firinSonSicak.append("#2861ac")
-        return (str(abs(dakika)) + ' ' + degisken + ' önce ' + firinSonSicak[0] + ' çıktı.')
+        return (str(firinSonSicak[0] + ' soğuk.'))
+
+    
 def firinlar(request):
     keyword = request.GET.get("keyword")
     db = firebase.database()
@@ -220,7 +221,6 @@ def sicakCikar(request, firinAdi, ekmekId):
             dakika = request.POST.get('dakika')
             duration = request.POST.get('duration')
             bildirim = request.POST.get('bildirim', 'off')
-            print(duration)
 
             if int(dakika) < 0:
                 messages.info(request, 'Maalesef Bir Sikinti Olustu')
