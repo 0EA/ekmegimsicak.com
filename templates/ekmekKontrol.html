@@ -12,7 +12,7 @@
     <!-- keywords -->
     <meta name="keywords" content="fırın, sıcak ekmek, ekmek, pide, ekmeğim sicak">
     <!-- Page Title -->
-    <title>Ekmeğim Sıcak</title>
+    <title>Ekmeğim Sıcak | Ekmek Kontrol</title>
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
     <!-- Bundle -->
@@ -55,6 +55,11 @@
             <!--Nav Links-->
             <div class="collapse navbar-collapse" id="agency">
                 <div class="navbar-nav ml-auto">
+                    <a class="nav-link link" href="javascript:void(0)">Yardım</a>
+                    <a class="nav-link link" href="javascript:void(0)" style="margin-right: 8px;">Hesap Ayarları</a>
+                    <a class="nav-link link" href="javascript:void(0)">Ürün Yönetimi</a>
+                    <a class="nav-link link" href="{% url 'info' %}">Ana Sayfa</a>
+                    <a class="nav-link link" href="{% url 'firinlar' %}" style="margin-right: -18px;">Fırınlar</a>
                     <a class="nav-link link" href="{% url 'user:logout' %}">Çıkış Yap</a>
                     <span class="menu-line"><i aria-hidden="true" class="fa fa-angle-down"></i></span>
                 </div>
@@ -96,6 +101,26 @@
             <div class="shape-left">
                 <nav class="navbar full-menu-navigation left">
                     <ul class="list-unstyled">
+                        <li><a class="link" href="javascript:void(0)">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Yardım</span>
+                        </a></li>
+                        <li><a class="link" href="javascript:void(0)">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Hesap Ayarları</span>
+                        </a></li>
+                        <li><a class="link" href="javascript:void(0)">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Ürün Yönetimi</span>
+                        </a></li>
+                        <li><a class="link" href="{% url 'info' %}">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Ana Sayfa</span>
+                        </a></li>
+                        <li><a class="link" href="{% url 'firinlar' %}">
+                            <span class="anchor-circle"></span>
+                            <span class="anchor-text">Fırınlar</span>
+                        </a></li>
                         <li><a class="link" href="{% url 'user:logout' %}">
                             <span class="anchor-circle"></span>
                             <span class="anchor-text">Çıkış Yap</span>
