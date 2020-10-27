@@ -73,6 +73,11 @@ def logoutUser(request):
 
 
 def sicakDurum(firinSonSicak):
+    timestamp = time.time()
+
+    degistirilmemisFirinSonSicak1 = firinSonSicak[1]
+
+    firinSonSicak[1] = int((firinSonSicak[1] - timestamp) // 60)
     dakika = firinSonSicak[1]
     dakika = abs(dakika)
     degisken = 'dakika'
@@ -80,19 +85,26 @@ def sicakDurum(firinSonSicak):
         dakika = dakika//60
         degisken = 'saat'
 
-    timestamp = time.time()
     
     firinSonSicakDonusturulmus = int((firinSonSicak[2] - timestamp) // 60)
 
-    if firinSonSicakDonusturulmus - firinSonSicak[1] > 0 and firinSonSicak[2] - timestamp > 0:
+    if firinSonSicakDonusturulmus > firinSonSicak[1] and firinSonSicak[2] > timestamp:
+
         duration = firinSonSicakDonusturulmus - firinSonSicak[1]
         degisken2 = 'dakika'
         if len(str(duration)) >= 3:
             duration = duration//60
             degisken2 = 'saat'
+
+        if degistirilmemisFirinSonSicak1 < timestamp:
+            duration = int((firinSonSicak[2] - timestamp) // 60)
+            degisken2 = 'dakika'
+            if len(str(duration)) >= 3:
+                duration = duration//60
+                degisken2 = 'saat'
+            
         firinSonSicak[2] = str(duration) + " " + str(degisken2) + ' boyunca çıkacak'
         
-
     else:
         firinSonSicak[2] = ''
 
@@ -119,12 +131,9 @@ def firinlar(request):
     result = db.child("profiles").get().val()
     result = dict(result)
     timestamp = time.time()
-    try:
-        for firinAdi,firin in result.items():
-            firin['firinSonSicak'][1] = int((firin['firinSonSicak'][1] - timestamp) // 60)
-            firin['firinSonSicak'][1] = sicakDurum(firin['firinSonSicak'])
-    except:
-        pass
+    
+    for firinAdi,firin in result.items():
+        firin['firinSonSicak'][1] = sicakDurum(firin['firinSonSicak'])
     
     if keyword:
         for firinAdi, i in result.items():
@@ -235,9 +244,9 @@ def sicakCikar(request, firinAdi, ekmekId):
             firinIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/name").get().val()
             ekmekIsmi = db.child("profiles/" + firinAdi + "/ekmekler/" + str(ekmekId) + "/ekmekAdi").get().val()
 
-            if int(duration) != 0:
-                db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(yeniTarih)+int(duration)*60})
-                db.child("profiles").child(firinAdi).child("firinSonSicak").update({"2":int(yeniTarih)+int(duration)*60})
+            db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(yeniTarih)+int(duration)*60})
+            db.child("profiles").child(firinAdi).child("firinSonSicak").update({"2":int(yeniTarih)+int(duration)*60})
+            
 
             message_title = str(firinIsmi)
             message_body = str(dakika) + " dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
