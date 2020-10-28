@@ -55,7 +55,7 @@
             <!--Nav Links-->
             <div class="collapse navbar-collapse" id="agency">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-link link" href="javascript:void(0)">Yardım</a>
+                    <a class="nav-link link" href="#yardim">Yardım</a>
                     <a class="nav-link link" href="javascript:void(0)" style="margin-right: 8px;">Hesap Ayarları</a>
                     <a class="nav-link link" href="javascript:void(0)">Ürün Yönetimi</a>
                     <a class="nav-link link" href="{% url 'info' %}">Ana Sayfa</a>
@@ -101,7 +101,7 @@
             <div class="shape-left">
                 <nav class="navbar full-menu-navigation left">
                     <ul class="list-unstyled">
-                        <li><a class="link" href="javascript:void(0)">
+                        <li><a class="link" href="#yardim">
                             <span class="anchor-circle"></span>
                             <span class="anchor-text">Yardım</span>
                         </a></li>
@@ -199,6 +199,54 @@
 </div>
 </div>
 
+<section id="yardim">
+<div class="container">
+    <div class="col-lg-8">
+        <!--Heading-->
+        <div class="heading-area pb-2">
+            <h2 class="title mt-0">Bize Ulaşın</h2>
+        </div>
+        <!--Contact Form-->
+        <form class="contact-form" id="contact-form-data">
+            <!--Result-->
+            <div class="row">
+            <div class="col-12" id="result"></div>
+                <!--Left Column-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input class="form-control" id="subject" name="userSubject" placeholder="Konu" required=""
+                               type="text">
+                    </div>
+                </div>
+
+                <!--Right Column-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="form-control" id="message" name="userMessage"
+                                  placeholder="Mesaj"></textarea>
+                    </div>
+                </div>
+
+                <!--Button-->
+                <div class="col-md-12">
+                    <a class="btn btn-large btn-rounded btn-purple btn-hvr-blue d-block mt-4 contact_btn" href="javascript:void(0);"
+                       id="submit_btn"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i><b>Gönder</b>
+                        <div class="btn-hvr-setting">
+                            <ul class="btn-hvr-setting-inner">
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+</section>
 
 
 
