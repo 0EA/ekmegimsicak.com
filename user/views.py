@@ -156,8 +156,41 @@ def firinlar(request):
     return render(request, 'firinlar.html', context=context)
 
 
+def durationChanger(sonSicakObjesi):
+    timestamp = time.time()
+
+    firinSonSicak = sonSicakObjesi
+    degistirilmemisFirinSonSicak1 = firinSonSicak[3]
+
+    firinSonSicak[3] = int((firinSonSicak[3] - timestamp) // 60)
+
+    
+    firinSonSicakDonusturulmus = int((firinSonSicak[4] - timestamp) // 60)
+
+    if firinSonSicakDonusturulmus > firinSonSicak[3] and firinSonSicak[4] > timestamp:
+
+        duration = firinSonSicakDonusturulmus - firinSonSicak[3]
+        degisken2 = 'dakika'
+        if len(str(duration)) >= 3:
+            duration = duration//60
+            degisken2 = 'saat'
+
+        if degistirilmemisFirinSonSicak1 < timestamp:
+            duration = int((firinSonSicak[4] - timestamp) // 60)
+            degisken2 = 'dakika'
+            if len(str(duration)) >= 3:
+                duration = duration//60
+                degisken2 = 'saat'
+            
+        firinSonSicak[4] = str(duration) + " " + str(degisken2) + ' boyunca çıkacak'
+        
+    else:
+        firinSonSicak[4] = ''
+    
 
 def saat_renk(sonSicakObjesi):
+
+
     dakika = sonSicakObjesi[0]
     dakika = abs(dakika)
     degisken = 'dakika'
@@ -182,7 +215,8 @@ def detay(request, name):
     suan = time.time()
     firin['ekmekler'] = sorted(firin['ekmekler'].values(), key=itemgetter('sonSicak'), reverse=True)
     for ekmek in firin['ekmekler']:
-        ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi']]
+        ekmek['sonSicak'] = [int((ekmek['sonSicak'] - suan) // 60), 'renk', ekmek['ekmekAdi'], ekmek['sonSicak'], ekmek['duration']]
+        durationChanger(ekmek['sonSicak'])
         ekmek['sonSicak'][0] = saat_renk(ekmek['sonSicak'])
     context = {
         'firin':firin
