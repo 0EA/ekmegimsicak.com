@@ -207,14 +207,15 @@
             <h2 class="title mt-0">Bize Ulaşın</h2>
         </div>
         <!--Contact Form-->
-        <form class="contact-form" id="contact-form-data">
+        <form class="contact-form" method="POST" action="{% url 'user:yardim' firin.userName %}">
+            {% csrf_token %}
             <!--Result-->
             <div class="row">
             <div class="col-12" id="result"></div>
                 <!--Left Column-->
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input class="form-control" id="subject" name="userSubject" placeholder="Konu" required=""
+                        <input class="form-control" id="subject" name="baslik" placeholder="Konu" required=""
                                type="text">
                     </div>
                 </div>
@@ -222,15 +223,15 @@
                 <!--Right Column-->
                 <div class="col-md-12">
                     <div class="form-group">
-                        <textarea class="form-control" id="message" name="userMessage"
+                        <textarea class="form-control" id="message" name="mesaj" required=""
                                   placeholder="Mesaj"></textarea>
                     </div>
                 </div>
 
                 <!--Button-->
                 <div class="col-md-12">
-                    <a class="btn btn-large btn-rounded btn-purple btn-hvr-blue d-block mt-4 contact_btn" href="javascript:void(0);"
-                       id="submit_btn"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i><b>Gönder</b>
+                    <button class="btn btn-large btn-rounded btn-purple btn-hvr-blue d-block mt-4" href=""
+                       type="submit"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i><b>Gönder</b>
                         <div class="btn-hvr-setting">
                             <ul class="btn-hvr-setting-inner">
                                 <li class="btn-hvr-effect"></li>
@@ -239,7 +240,7 @@
                                 <li class="btn-hvr-effect"></li>
                             </ul>
                         </div>
-                    </a>
+                    </button>
                 </div>
 
             </div>

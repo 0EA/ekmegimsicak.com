@@ -8,4 +8,5 @@ app_name = 'user'
 urlpatterns = [
     path('login/', views.loginUser, name = "login"),
     path('logout/', views.logoutUser, name = "logout"),
+    path('yardim/<str:firinAdi>', views.yardim, name='yardim')
 ]
