@@ -333,8 +333,18 @@ def yardim(request, firinAdi):
         messages.warning(request, "Lütfen önce giriş yapın.")
         return redirect('user:login')
 
-def changeUserSettings(request):
-    pass
+def changeUserSettings(request, firinAdi):
+    if isLogged():
+        if request.method == 'POST':
+            title = str(request.POST.get('baslik'))
+            message = str(request.POST.get('mesaj'))
+            db = firebase.database()
+            db.child("yardim").child('firinlar').child(firinAdi).push({"konu":title, "aciklama":message, "userName":firinAdi})
+            messages.info(request, "Mesajiniz Basari Ile Iletildi.")
+        return redirect('ekmekKontrol')
+    else:
+        messages.warning(request, "Lütfen önce giriş yapın.")
+        return redirect('user:login')
 
     
            
