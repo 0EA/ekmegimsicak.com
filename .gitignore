@@ -3,7 +3,8 @@ zzYapilacaklar
 zzJsonLinks
 musteriText.txt
 metin.txt
-.static/
+static/
+
 
 *.log
 
