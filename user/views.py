@@ -289,11 +289,13 @@ def sicakCikar(request, firinAdi, ekmekId):
                 dakika = 5 * 60
 
             data_message = {
-            "sender": firinAdi,
-            "ekmekId" : ekmekId,
-            "timestamp" : yeniTarih,
+            "message": message_body,
             "title": message_title,
-            "message": message_body
+            "sender": firinAdi,
+            "timestamp" : yeniTarih,
+            "duration" : duration,
+            "ekmekId" : ekmekId,
+            "ekmekAdi" : ekmekIsmi,
             }
 
             if bildirim == 'on':
