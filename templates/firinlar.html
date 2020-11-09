@@ -172,10 +172,19 @@
                 
                 <div class="news-item">
                     <div class="news-text-box">
-                        <a href="{% static 'agency/blog-list.html' %}"><h2 class="">{{ firin.name }}</h2></a>
+                        <a href="{% url 'detay' firin.userName %}"><h2 class="">{{ firin.name }}</h2></a>
                         <h6 style="color: {{firin.firinSonSicak.3}};">{{firin.firinSonSicak.1}}</h6>
                         <p style="font-size: 13px;">{{firin.firinSonSicak.2}}</p>
-                        <p class="param">{{ firin.adres }}</p>
+                        <div class="row">
+                            <div class="col-8">
+                                <p class="param">{{ firin.adres }}</p>
+                            </div>
+                            <div class="col">
+                                {% if firin.temassiz == True %}
+                                <img src="{% static 'img/temassizUretim.svg' %}" alt="" style="width: 55px; height: 55px;">
+                                {% endif %}
+                            </div>
+                        </div>
                         <a class="author d-flex align-items-center" href="javascript:void(0);">
                             <a class="btn btn-large btn-rounded btn-pink btn-hvr-blue mt-2" href="{% url 'detay' firin.userName %}">Detaylar
                                 <div class="btn-hvr-setting">

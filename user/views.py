@@ -281,7 +281,7 @@ def sicakCikar(request, firinAdi, ekmekId):
             db.child("profiles").child(firinAdi).child("ekmekler").child(ekmekId).update({"duration":int(yeniTarih)+int(duration)*60})
             db.child("profiles").child(firinAdi).child("firinSonSicak").update({"2":int(yeniTarih)+int(duration)*60})
             
-
+            
             message_title = str(firinIsmi)
             message_body = str(dakika) + " dakika sonra sıcak " + str(ekmekIsmi) + " çıkıyor!"
             if int(dakika) == 0:
