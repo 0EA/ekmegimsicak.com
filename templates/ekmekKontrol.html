@@ -201,6 +201,7 @@
 
 <section id="yardim">
 <div class="container">
+<div class="row">
     <div class="col-lg-8">
         <!--Heading-->
         <div class="heading-area pb-2">
@@ -246,6 +247,58 @@
             </div>
         </form>
     </div>
+    <div class="col-lg-4">
+        <!--Heading-->
+        <div class="heading-area pb-2">
+            <h2 class="title mt-0">Ayarlar</h2>
+        </div>
+        <!--Contact Form-->
+        <form class="contact-form" method="POST" action="{% url 'user:changeProfile' firin.userName %}">
+            {% csrf_token %}
+            <!--Result-->
+            <div class="row">
+            <div class="col-12" id="result"></div>
+                <!--Left Column-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input class="form-control" id="subject" name="eposta" placeholder="İletişim E-postası" required=""
+                               type="text">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input class="form-control" id="subject" name="numara" placeholder="Telefon Numarası" required=""
+                               type="text">
+                    </div>
+                </div>
+
+                <!--Right Column-->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="form-control" id="message" name="aciklama" required=""
+                                  placeholder="Fırın Açıklaması"></textarea>
+                    </div>
+                </div>
+
+                <!--Button-->
+                <div class="col-md-12">
+                    <button class="btn btn-large btn-rounded btn-purple btn-hvr-blue d-block mt-4" href=""
+                       type="submit"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i><b>Değiştir</b>
+                        <div class="btn-hvr-setting">
+                            <ul class="btn-hvr-setting-inner">
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                                <li class="btn-hvr-effect"></li>
+                            </ul>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
 </div>
 </section>
 

@@ -348,6 +348,24 @@ def changeUserSettings(request, firinAdi):
         messages.warning(request, "Lütfen önce giriş yapın.")
         return redirect('user:login')
 
+def changeProfile(request, firinAdi):
+    if isLogged():
+        if request.method == 'POST':
+            eposta = str(request.POST.get('eposta'))
+            telefon = str(request.POST.get('numara'))
+            aciklama = str(request.POST.get('aciklama'))
+            db = firebase.database()
+            try:
+                db.child("profiles").child(firinAdi).update({"aciklama":aciklama, "telefon":telefon, "eposta":eposta}) 
+                messages.info(request, "Profiliniz Başarı İle Güncellendi.")
+            except:
+                messages.warning(request, "Bir hata oluştu lütfen daha sonra deneyin ve telefon numarasına rakam harici karakter girmemeye dikkat edin.")
+        return redirect('ekmekKontrol')
+    else:
+        messages.warning(request, "Lütfen önce giriş yapın.")
+        return redirect('user:login')
+
+
     
            
     
