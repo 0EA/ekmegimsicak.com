@@ -1,0 +1,15 @@
+Django==3.1.1
+django-background-tasks==1.2.5
+django-ckeditor==5.9.0
+django-cleanup==5.0.0
+django-colorfield==0.3.2
+django-compat==1.0.15
+django-crispy-forms==1.9.2
+django-js-asset==1.2.2
+django-mathfilters==1.0.0
+django-unixtimestampfield==0.4.0
+Pillow==7.2.0
+pyfcm==1.4.7
+pylint==2.6.0
+Pyrebase4
+requests
